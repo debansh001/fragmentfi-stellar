@@ -43,12 +43,14 @@ export function useWallet() {
           let signatureStr = "";
           if (typeof sigResult === 'string') {
             signatureStr = sigResult;
-          } else if (sigResult instanceof Uint8Array || Buffer.isBuffer(sigResult)) {
-            signatureStr = Buffer.from(sigResult).toString('base64');
+          } else if (sigResult instanceof Uint8Array) {
+            signatureStr = btoa(String.fromCharCode.apply(null, Array.from(sigResult)));
           } else if (sigResult?.signature) {
-            signatureStr = typeof sigResult.signature === 'string' 
-              ? sigResult.signature 
-              : Buffer.from(sigResult.signature).toString('base64');
+            if (typeof sigResult.signature === 'string') {
+              signatureStr = sigResult.signature;
+            } else if (sigResult.signature instanceof Uint8Array) {
+              signatureStr = btoa(String.fromCharCode.apply(null, Array.from(sigResult.signature)));
+            }
           }
 
           // Send to API
