@@ -5,7 +5,7 @@ import WithdrawForm from '@/components/WithdrawForm';
 import TxnStatus from '@/components/TxnStatus';
 
 export default function WithdrawPage() {
-  const [successData, setSuccessData] = useState<{ amountFrag: number, newBalance: number } | null>(null);
+  const [successData, setSuccessData] = useState<{ amountFrag: number, newBalance: number, txHash: string } | null>(null);
   const [maxBalance, setMaxBalance] = useState<number>(0);
   const [loading, setLoading] = useState(true);
 
@@ -45,6 +45,7 @@ export default function WithdrawPage() {
             <TxnStatus 
               amountFrag={successData.amountFrag} 
               newBalance={successData.newBalance}
+              txHash={successData.txHash}
               mode="withdraw"
               onReset={() => {
                 setSuccessData(null);
@@ -59,7 +60,7 @@ export default function WithdrawPage() {
         ) : (
           <WithdrawForm 
             maxBalance={maxBalance}
-            onSuccess={(amountFrag, newBalance) => setSuccessData({ amountFrag, newBalance })} 
+            onSuccess={(amountFrag, newBalance, txHash) => setSuccessData({ amountFrag, newBalance, txHash })} 
           />
         )}
       </div>

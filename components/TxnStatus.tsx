@@ -8,10 +8,11 @@ interface TxnStatusProps {
   amountFrag: number;
   newBalance: number;
   mode?: 'deposit' | 'withdraw';
+  txHash?: string;
   onReset: () => void;
 }
 
-export default function TxnStatus({ amountFrag, newBalance, mode = 'deposit', onReset }: TxnStatusProps) {
+export default function TxnStatus({ amountFrag, newBalance, mode = 'deposit', txHash, onReset }: TxnStatusProps) {
   useEffect(() => {
     // Fire confetti on mount
     const duration = 3 * 1000;
@@ -57,6 +58,20 @@ export default function TxnStatus({ amountFrag, newBalance, mode = 'deposit', on
           : `You successfully withdrew funds and burned `}
         <span className="font-semibold text-foreground">{amountFrag.toFixed(2)} FRAG</span>.
       </p>
+
+      {txHash && (
+        <div className="mb-6 flex flex-col items-center gap-1.5">
+          <span className="text-xs text-muted-foreground uppercase tracking-wider font-semibold">Transaction Proof</span>
+          <a 
+            href={`https://stellar.expert/explorer/testnet/tx/${txHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg font-bold text-sm transition-all border border-primary/20 hover:border-primary/30"
+          >
+            Verify on Stellar.Expert 🔍
+          </a>
+        </div>
+      )}
 
       <div className="bg-muted w-full p-4 rounded-lg mb-8">
         <p className="text-sm text-muted-foreground mb-1">New FRAG Balance</p>

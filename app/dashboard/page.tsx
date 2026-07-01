@@ -17,6 +17,7 @@ interface DashboardData {
     amount_usd: number;
     frag_delta: number;
     timestamp: string;
+    txn_hash: string | null;
   }>;
   totalYield: number;
   currentApy: number;
@@ -120,7 +121,19 @@ export default function DashboardPage() {
                 {data.recentTransactions.map((tx) => (
                   <div key={tx.id} className="flex items-center justify-between border-b border-border/50 pb-3 last:border-0 last:pb-0">
                     <div className="flex flex-col gap-1">
-                      <span className="text-sm font-medium capitalize text-foreground">{tx.type.toLowerCase()}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-medium capitalize text-foreground">{tx.type.toLowerCase()}</span>
+                        {tx.txn_hash && (
+                          <a 
+                            href={`https://stellar.expert/explorer/testnet/tx/${tx.txn_hash}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] px-1.5 py-0.5 bg-primary/10 hover:bg-primary/20 text-primary rounded font-bold transition-colors"
+                          >
+                            Verify 🔍
+                          </a>
+                        )}
+                      </div>
                       <span className="text-xs text-muted-foreground">
                         {new Date(tx.timestamp).toLocaleDateString()}
                       </span>

@@ -87,9 +87,9 @@ export default function TransactionTable({ transactions, loading }: TransactionT
                         href={`https://stellar.expert/explorer/testnet/tx/${tx.txn_hash}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-primary hover:underline font-medium text-xs"
+                        className="inline-flex items-center gap-1 px-2.5 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-md font-bold text-xs transition-colors"
                       >
-                        Confirmed ↗
+                        Verify 🔍
                       </a>
                     ) : (
                       <span className="text-xs text-muted-foreground italic">Pending</span>

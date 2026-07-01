@@ -5,7 +5,7 @@ import DepositForm from '@/components/DepositForm';
 import TxnStatus from '@/components/TxnStatus';
 
 export default function DepositPage() {
-  const [successData, setSuccessData] = useState<{ amountFrag: number, newBalance: number } | null>(null);
+  const [successData, setSuccessData] = useState<{ amountFrag: number, newBalance: number, txHash: string } | null>(null);
 
   return (
     <div className="flex flex-col gap-6 w-full max-w-4xl mx-auto py-8">
@@ -22,12 +22,13 @@ export default function DepositPage() {
             <TxnStatus 
               amountFrag={successData.amountFrag} 
               newBalance={successData.newBalance}
+              txHash={successData.txHash}
               onReset={() => setSuccessData(null)} 
             />
           </div>
         ) : (
           <DepositForm 
-            onSuccess={(amountFrag, newBalance) => setSuccessData({ amountFrag, newBalance })} 
+            onSuccess={(amountFrag, newBalance, txHash) => setSuccessData({ amountFrag, newBalance, txHash })} 
           />
         )}
       </div>

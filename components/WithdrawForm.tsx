@@ -6,7 +6,7 @@ import { buildWithdrawTransaction } from '@/lib/stellar';
 
 interface WithdrawFormProps {
   maxBalance: number;
-  onSuccess: (amountFrag: number, newBalance: number) => void;
+  onSuccess: (amountFrag: number, newBalance: number, txHash: string) => void;
 }
 
 export default function WithdrawForm({ maxBalance, onSuccess }: WithdrawFormProps) {
@@ -75,6 +75,7 @@ export default function WithdrawForm({ maxBalance, onSuccess }: WithdrawFormProp
       }
 
       // 3. Submit to API to record transaction and update balance
+      const txHash = 'mock_burn_hash_' + Date.now();
       const res = await fetch('/api/withdraw', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -82,7 +83,7 @@ export default function WithdrawForm({ maxBalance, onSuccess }: WithdrawFormProp
           fragAmount: amountFrag,
           receiveUsd: netUsdValue,
           targetAsset: asset,
-          txHash: 'mock_burn_hash_' + Date.now() 
+          txHash
         })
       });
 
@@ -94,7 +95,7 @@ export default function WithdrawForm({ maxBalance, onSuccess }: WithdrawFormProp
       const data = await res.json();
       
       // 4. Success callback
-      onSuccess(amountFrag, data.newBalance);
+      onSuccess(amountFrag, data.newBalance, txHash);
 
     } catch (e: any) {
       console.error(e);

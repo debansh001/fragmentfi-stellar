@@ -5,7 +5,7 @@ import { useWallet } from '@/hooks/useWallet';
 import { buildDepositTransaction } from '@/lib/stellar';
 
 interface DepositFormProps {
-  onSuccess: (amountFrag: number, newBalance: number) => void;
+  onSuccess: (amountFrag: number, newBalance: number, txHash: string) => void;
 }
 
 export default function DepositForm({ onSuccess }: DepositFormProps) {
@@ -55,6 +55,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       }
 
       // 3. Submit to API to record transaction and update balance
+      const txHash = 'mock_hash_' + Date.now();
       const res = await fetch('/api/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,7 +63,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
           amountUsd: usdValue,
           fragDelta: finalFrag,
           asset,
-          txHash: 'mock_hash_' + Date.now() // In reality, we'd submit to Stellar network and get real hash
+          txHash
         })
       });
 
@@ -73,7 +74,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       const data = await res.json();
       
       // 4. Success callback
-      onSuccess(finalFrag, data.newBalance);
+      onSuccess(finalFrag, data.newBalance, txHash);
 
     } catch (e: any) {
       console.error(e);
