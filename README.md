@@ -186,6 +186,18 @@ Provides public proof-of-reserves.
 
 ---
 
+# Smart Contract Deployments
+
+All FragmentFi contracts are deployed and verified on the Stellar Soroban Testnet. You can view the contracts and their transactions on the Stellar Expert explorer.
+
+| Contract Name | Contract ID | Verification Link (Stellar Expert) |
+| --- | --- | --- |
+| **FRAG Token** | `CBZ4JGP7252NZLB3XPRKKD2JEVTVNLK763B3CWNKJSLCR2UDABRFEEUT` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBZ4JGP7252NZLB3XPRKKD2JEVTVNLK763B3CWNKJSLCR2UDABRFEEUT) |
+| **Treasury Pool** | `CADT5HICHEOLODCTCOLVEBC2UX6EAX2RD5WHO5JBBENM4W6H4DZDAYCE` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CADT5HICHEOLODCTCOLVEBC2UX6EAX2RD5WHO5JBBENM4W6H4DZDAYCE) |
+| **Yield Distributor** | `CAQIARO33MYC7Y6BJU5GQAAZK5YPECQ2MLUHBYML3R534QTFHJJFQXGJ` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CAQIARO33MYC7Y6BJU5GQAAZK5YPECQ2MLUHBYML3R534QTFHJJFQXGJ) |
+
+---
+
 # Transparency Through Proof of Reserves
 
 Trust is the foundation of finance.
