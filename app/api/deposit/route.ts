@@ -1,66 +1,66 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
-import prisma from '@/lib/db';
+import redis, { KEYS } from '@/lib/redis';
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-for-dev-only');
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
+);
 
 export async function POST(req: Request) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get('fragmentfi_session')?.value;
-
-    if (!token) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { payload } = await jwtVerify(token, JWT_SECRET);
-    const userId = payload.id as string;
+    const address = payload.address as string;
+    if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
     const { amountUsd, fragDelta, asset, txHash } = await req.json();
-
     if (amountUsd === undefined || fragDelta === undefined || !txHash) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // In a real production app, you would verify the transaction hash on the Stellar network
-    // before crediting the user's account. For this demo, we assume the client successfully
-    // submitted the signed transaction.
+    // Upsert user
+    const userKey = KEYS.user(address);
+    if (!(await redis.get(userKey))) {
+      await redis.set(userKey, JSON.stringify({ wallet_address: address, created_at: new Date().toISOString() }));
+    }
 
-    // Update the database transactionally
-    const result = await prisma.$transaction(async (tx: any) => {
-      // 1. Insert transaction record
-      await tx.transaction.create({
-        data: {
-          user_id: userId,
-          type: 'DEPOSIT',
-          amount_usd: amountUsd,
-          frag_delta: fragDelta,
-          txn_hash: txHash,
-        }
-      });
+    // Update portfolio atomically using Redis GET + SET
+    const portfolioKey = KEYS.portfolio(address);
+    const existing = await redis.get<string>(portfolioKey);
+    const portfolio = existing
+      ? (typeof existing === 'string' ? JSON.parse(existing) : existing)
+      : { frag_balance: 0, usd_value: 0 };
 
-      // 2. Update portfolio balance
-      const portfolio = await tx.portfolio.upsert({
-        where: { user_id: userId },
-        update: {
-          frag_balance: { increment: fragDelta },
-          usd_value: { increment: amountUsd },
-        },
-        create: {
-          user_id: userId,
-          frag_balance: fragDelta,
-          usd_value: amountUsd,
-        }
-      });
+    const newPortfolio = {
+      frag_balance: (portfolio.frag_balance || 0) + fragDelta,
+      usd_value: (portfolio.usd_value || 0) + amountUsd,
+      updated_at: new Date().toISOString(),
+    };
 
-      return portfolio;
+    const txRecord = JSON.stringify({
+      id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      type: 'DEPOSIT',
+      amount_usd: amountUsd,
+      frag_delta: fragDelta,
+      txn_hash: txHash,
+      asset: asset || 'XLM',
+      timestamp: new Date().toISOString(),
     });
 
-    return NextResponse.json({ success: true, newBalance: result.frag_balance });
+    await Promise.all([
+      redis.set(portfolioKey, JSON.stringify(newPortfolio)),
+      redis.lpush(KEYS.txns(address), txRecord),
+      // Update global stats
+      redis.incrbyfloat(KEYS.statsAum, amountUsd),
+    ]);
 
+    return NextResponse.json({ success: true, newBalance: newPortfolio.frag_balance });
   } catch (error) {
-    console.error("Deposit API Error:", error);
+    console.error('Deposit API Error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

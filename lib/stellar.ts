@@ -14,7 +14,12 @@ const TREASURY_CONTRACT_ID = process.env.NEXT_PUBLIC_TREASURY_CONTRACT_ID || 'CT
 const RPC_URL = 'https://soroban-testnet.stellar.org';
 const NETWORK_PASSPHRASE = Networks.TESTNET;
 
-const server = new SorobanRpc.Server(RPC_URL);
+// Lazy-init: avoid module-level crash if SorobanRpc is not ready at import time
+let _server: InstanceType<typeof SorobanRpc.Server> | null = null;
+function getServer() {
+  if (!_server) _server = new SorobanRpc.Server(RPC_URL);
+  return _server;
+}
 
 /**
  * Builds a Soroban invoke transaction to deposit XLM into the Treasury Pool
@@ -24,7 +29,7 @@ export async function buildDepositTransaction(
   amountStr: string,
   assetCode: string
 ): Promise<string> {
-  const account = await server.getAccount(sourceAddress);
+  const account = await getServer().getAccount(sourceAddress);
   
   // amount is converted from string to a number, and we use stroops if needed.
   // Soroban takes i128 for amounts in our contract. Let's pass it as i128.
@@ -58,7 +63,7 @@ export async function buildWithdrawTransaction(
   amountFrag: string,
   targetAssetCode: string
 ): Promise<string> {
-  const account = await server.getAccount(sourceAddress);
+  const account = await getServer().getAccount(sourceAddress);
   
   const amountStroops = BigInt(Math.floor(parseFloat(amountFrag) * 10000000));
   
@@ -100,7 +105,7 @@ export async function getFragBalance(walletAddress: string): Promise<string> {
       .setTimeout(30)
       .build();
 
-    const simResponse = await server.simulateTransaction(tx);
+    const simResponse = await getServer().simulateTransaction(tx);
     
     if (SorobanRpc.Api.isSimulationError(simResponse)) {
       console.error("Simulation error: ", simResponse.error);

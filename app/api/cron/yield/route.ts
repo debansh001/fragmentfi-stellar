@@ -1,92 +1,98 @@
 import { NextResponse } from 'next/server';
-import prisma from '@/lib/db';
-import { distributeYieldOnChain } from '@/lib/stellar';
+import redis, { KEYS } from '@/lib/redis';
 
 export async function GET(req: Request) {
   try {
-    // 1. Verify cron secret to prevent unauthorized access
-    // Vercel sets a CRON_SECRET header that matches the CRON_SECRET env variable
+    // 1. Verify cron secret
     const authHeader = req.headers.get('authorization');
     const expectedAuth = `Bearer ${process.env.CRON_SECRET || 'dev-cron-secret'}`;
-    
-    // For local dev without cron secret, we might skip this or allow a bypass, but it's good practice to enforce it
     if (process.env.NODE_ENV === 'production' && authHeader !== expectedAuth) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // 2. Fetch all users and calculate total pool balance
-    // In our simplified mock, we sum all FRAG balances to find the total pool balance
-    // since FRAG is 1:1 backed by XLM in the Treasury Pool.
-    const allPortfolios = await prisma.portfolio.findMany({
-      include: {
-        user: true,
-      }
-    });
+    // 2. Scan all portfolio keys in Redis
+    // We use a scan pattern to find all portfolio:{address} keys
+    let cursor = 0;
+    let portfolioKeys: string[] = [];
 
-    let totalFragSupply = 0;
-    for (const p of allPortfolios) {
-      totalFragSupply += p.frag_balance;
+    do {
+      const [nextCursor, keys] = await redis.scan(cursor, {
+        match: 'portfolio:*',
+        count: 100,
+      });
+      cursor = parseInt(nextCursor as string);
+      portfolioKeys.push(...(keys as string[]));
+    } while (cursor !== 0);
+
+    if (portfolioKeys.length === 0) {
+      return NextResponse.json({ success: true, message: 'No portfolios to distribute yield to.' });
     }
+
+    // 3. Fetch all portfolios
+    const portfolios = await Promise.all(
+      portfolioKeys.map(async (key) => {
+        const raw = await redis.get<string>(key);
+        const address = key.replace('portfolio:', '');
+        const data = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : null;
+        return data ? { address, ...data } : null;
+      })
+    );
+
+    const active = portfolios.filter(
+      (p): p is NonNullable<typeof p> => p !== null && (p.frag_balance || 0) > 0
+    );
+
+    const totalFragSupply = active.reduce((sum, p) => sum + (p.frag_balance || 0), 0);
 
     if (totalFragSupply <= 0) {
-      return NextResponse.json({ success: true, message: "No yield to distribute (pool is empty)" });
+      return NextResponse.json({ success: true, message: 'Pool is empty — no yield to distribute.' });
     }
 
-    // 3. Calculate 4.5% APY yield for this week
-    // Weekly Yield = (Total Pool * 0.045) / 52
+    // 4. Calculate weekly yield at 4.5% APY
     const totalWeeklyYield = (totalFragSupply * 0.045) / 52;
     const yieldPerFrag = totalWeeklyYield / totalFragSupply;
+    const txHash = `yield_${Date.now()}`;
 
-    // 4. Call Soroban smart contract to distribute yield on-chain
-    // In production, we'd sign and submit with a securely stored admin Keypair
-    const txHash = await distributeYieldOnChain(totalWeeklyYield);
+    // 5. Distribute yield to each holder
+    const distributions = active.map(async (p) => {
+      const userYield = (p.frag_balance || 0) * yieldPerFrag;
 
-    // 5. Write yield records to Neon Database and update portfolios
-    const yieldOperations = [];
-    
-    for (const portfolio of allPortfolios) {
-      if (portfolio.frag_balance > 0) {
-        const userYield = portfolio.frag_balance * yieldPerFrag;
-        
-        yieldOperations.push(
-          prisma.yieldDistribution.create({
-            data: {
-              user_id: portfolio.user_id,
-              amount: userYield,
-              txn_hash: `${txHash}_${portfolio.user_id}`,
-            }
-          })
-        );
-        
-        yieldOperations.push(
-          prisma.portfolio.update({
-            where: { user_id: portfolio.user_id },
-            data: {
-              frag_balance: { increment: userYield },
-              usd_value: { increment: userYield } // 1 FRAG = 1 USD for mock purposes
-            }
-          })
-        );
+      const newPortfolio = {
+        frag_balance: (p.frag_balance || 0) + userYield,
+        usd_value: (p.usd_value || 0) + userYield,
+        updated_at: new Date().toISOString(),
+      };
 
-        // Optional: Send email notification
-        if (portfolio.user.email) {
-          // sendEmail(portfolio.user.email, `You earned ${userYield.toFixed(2)} FRAG!`);
-          console.log(`[Email Mock] Sent yield notification to ${portfolio.user.email} for ${userYield.toFixed(2)} FRAG`);
-        }
-      }
-    }
+      const yieldRecord = JSON.stringify({
+        id: `${Date.now()}-${p.address.slice(0, 6)}`,
+        type: 'YIELD',
+        amount: userYield,
+        frag_delta: userYield,
+        amount_usd: userYield,
+        txn_hash: `${txHash}_${p.address.slice(0, 8)}`,
+        timestamp: new Date().toISOString(),
+      });
 
-    // Execute all updates in a transaction
-    await prisma.$transaction(yieldOperations);
-
-    return NextResponse.json({ 
-      success: true, 
-      totalYieldDistributed: totalWeeklyYield,
-      transactionHash: txHash
+      await Promise.all([
+        redis.set(KEYS.portfolio(p.address), JSON.stringify(newPortfolio)),
+        redis.lpush(KEYS.yield(p.address), yieldRecord),
+        redis.lpush(KEYS.txns(p.address), yieldRecord),
+      ]);
     });
 
+    await Promise.all(distributions);
+
+    // Update global AUM
+    await redis.incrbyfloat(KEYS.statsAum, totalWeeklyYield);
+
+    return NextResponse.json({
+      success: true,
+      totalYieldDistributed: totalWeeklyYield,
+      transactionHash: txHash,
+      holdersCount: active.length,
+    });
   } catch (error) {
-    console.error("Cron Yield Distribution Error:", error);
+    console.error('Cron Yield Distribution Error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

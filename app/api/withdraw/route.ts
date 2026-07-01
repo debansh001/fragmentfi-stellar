@@ -1,66 +1,63 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
-import prisma from '@/lib/db';
+import redis, { KEYS } from '@/lib/redis';
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-for-dev-only');
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
+);
 
 export async function POST(req: Request) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get('fragmentfi_session')?.value;
-
-    if (!token) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
     const { payload } = await jwtVerify(token, JWT_SECRET);
-    const userId = payload.id as string;
+    const address = payload.address as string;
+    if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
     const { fragAmount, receiveUsd, targetAsset, txHash } = await req.json();
-
     if (fragAmount === undefined || receiveUsd === undefined || !txHash) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Verify sufficient balance
-    const currentPortfolio = await prisma.portfolio.findUnique({
-      where: { user_id: userId }
-    });
+    // Check balance
+    const portfolioKey = KEYS.portfolio(address);
+    const existing = await redis.get<string>(portfolioKey);
+    const portfolio = existing
+      ? (typeof existing === 'string' ? JSON.parse(existing) : existing)
+      : { frag_balance: 0, usd_value: 0 };
 
-    if (!currentPortfolio || currentPortfolio.frag_balance < fragAmount) {
-      return NextResponse.json({ error: 'Insufficient balance' }, { status: 400 });
+    if ((portfolio.frag_balance || 0) < fragAmount) {
+      return NextResponse.json({ error: 'Insufficient FRAG balance' }, { status: 400 });
     }
 
-    // Update the database transactionally
-    const result = await prisma.$transaction(async (tx: any) => {
-      // 1. Insert transaction record
-      await tx.transaction.create({
-        data: {
-          user_id: userId,
-          type: 'WITHDRAWAL',
-          amount_usd: receiveUsd,
-          frag_delta: -fragAmount,
-          txn_hash: txHash,
-        }
-      });
+    const newPortfolio = {
+      frag_balance: Math.max(0, (portfolio.frag_balance || 0) - fragAmount),
+      usd_value: Math.max(0, (portfolio.usd_value || 0) - receiveUsd),
+      updated_at: new Date().toISOString(),
+    };
 
-      // 2. Update portfolio balance
-      const portfolio = await tx.portfolio.update({
-        where: { user_id: userId },
-        data: {
-          frag_balance: { decrement: fragAmount },
-          usd_value: { decrement: receiveUsd }, // Simplified mock valuation update
-        }
-      });
-
-      return portfolio;
+    const txRecord = JSON.stringify({
+      id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      type: 'WITHDRAWAL',
+      amount_usd: receiveUsd,
+      frag_delta: -fragAmount,
+      txn_hash: txHash,
+      asset: targetAsset || 'XLM',
+      timestamp: new Date().toISOString(),
     });
 
-    return NextResponse.json({ success: true, newBalance: result.frag_balance });
+    await Promise.all([
+      redis.set(portfolioKey, JSON.stringify(newPortfolio)),
+      redis.lpush(KEYS.txns(address), txRecord),
+      redis.incrbyfloat(KEYS.statsAum, -receiveUsd),
+    ]);
 
+    return NextResponse.json({ success: true, newBalance: newPortfolio.frag_balance });
   } catch (error) {
-    console.error("Withdraw API Error:", error);
+    console.error('Withdraw API Error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

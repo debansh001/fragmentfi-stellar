@@ -15,7 +15,7 @@ export default function HeroSection({ apy }: HeroSectionProps) {
     if (!address) {
       connect();
     } else {
-      window.location.href = '/dashboard';
+      window.location.replace('/dashboard');
     }
   };
 
@@ -53,7 +53,7 @@ export default function HeroSection({ apy }: HeroSectionProps) {
               disabled={isConnecting}
               className="rounded-full bg-primary px-8 py-4 text-base font-semibold text-white shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
             >
-              {isConnecting ? 'Connecting...' : address ? 'Go to Dashboard' : 'Start with $1'}
+              {isConnecting ? 'Checking...' : address ? 'Go to Dashboard →' : 'Start with $1'}
             </button>
             <a href="#how-it-works" className="text-base font-semibold leading-6 text-foreground hover:text-primary transition-colors">
               How it works <span aria-hidden="true">↓</span>

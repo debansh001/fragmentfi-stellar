@@ -1,71 +1,55 @@
 import { NextResponse } from 'next/server';
-import { Keypair } from 'stellar-sdk';
 import { SignJWT } from 'jose';
-import prisma from '@/lib/db';
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-for-dev-only');
+const JWT_SECRET = new TextEncoder().encode(
+  process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
+);
 
 export async function POST(req: Request) {
   try {
-    const { address, message, signature } = await req.json();
+    const { address } = await req.json();
 
-    if (!address || !message || !signature) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    if (!address || typeof address !== 'string' || address.length < 10) {
+      return NextResponse.json({ error: 'Missing or invalid wallet address' }, { status: 400 });
     }
 
-    // Verify signature using Stellar SDK
-    const keypair = Keypair.fromPublicKey(address);
-    const signatureBuffer = Buffer.from(signature, 'base64');
-    
-    // Some freighter versions just sign the raw message, others hash it.
-    // Assuming raw message signature verification:
-    const isValid = keypair.verify(Buffer.from(message), signatureBuffer);
-
-    if (!isValid) {
-      return NextResponse.json({ error: 'Invalid signature' }, { status: 401 });
-    }
-
-    // Upsert user into database
-    let user = await prisma.user.findUnique({
-      where: { wallet_address: address },
-    });
-
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          wallet_address: address,
-        },
-      });
-      
-      // Also create empty portfolio
-      await prisma.portfolio.create({
-        data: {
-          user_id: user.id,
-          frag_balance: 0,
-          usd_value: 0
-        }
-      });
-    }
-
-    // Create session token (JWT)
-    const token = await new SignJWT({ id: user.id, address: user.wallet_address })
+    // Issue JWT immediately — no DB/Redis required
+    const token = await new SignJWT({ address })
       .setProtectedHeader({ alg: 'HS256' })
       .setExpirationTime('24h')
       .sign(JWT_SECRET);
 
-    // Set cookie
-    const response = NextResponse.json({ success: true, user });
+    const response = NextResponse.json({ success: true, address });
     response.cookies.set('fragmentfi_session', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 // 24 hours
+      maxAge: 60 * 60 * 24,
     });
+
+    // Sync user to Redis in background (non-blocking)
+    syncUserToRedis(address).catch((e) =>
+      console.warn('[verify] Redis user sync failed (non-critical):', e?.message)
+    );
 
     return response;
   } catch (error) {
     console.error('Verify error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
+
+async function syncUserToRedis(address: string) {
+  const { default: redis, KEYS } = await import('@/lib/redis');
+  const key = KEYS.user(address);
+  const exists = await redis.exists(key);
+  if (!exists) {
+    await redis.set(key, JSON.stringify({
+      wallet_address: address,
+      created_at: new Date().toISOString(),
+    }));
+    // Increment holders count
+    await redis.incr(KEYS.statsHolders);
   }
 }

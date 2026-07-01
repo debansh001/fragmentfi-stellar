@@ -1,93 +1,75 @@
 "use client";
 
 import { useState, useCallback, useEffect } from 'react';
-import { 
-  isConnected, 
-  getAddress, 
-  requestAccess, 
-  signMessage,
-  signTransaction
-} from '@stellar/freighter-api';
+import { requestAccess, signTransaction } from '@stellar/freighter-api';
 
 export function useWallet() {
   const [address, setAddress] = useState<string | null>(null);
-  const [isConnecting, setIsConnecting] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(true); // start true while we check session
 
+  // On mount: restore session from the httpOnly cookie via /api/me
+  // This is the source of truth — independent of Freighter's isConnected()
   useEffect(() => {
-    // Check if wallet is already connected
-    const checkConnection = async () => {
-      try {
-        if (await isConnected()) {
-          const pubKeyRes: any = await getAddress();
-          const pubKey = typeof pubKeyRes === 'string' ? pubKeyRes : pubKeyRes?.address;
-          if (pubKey && typeof pubKey === 'string') setAddress(pubKey);
-        }
-      } catch (e) {
-        console.error("Failed to get address automatically", e);
-      }
-    };
-    checkConnection();
+    fetch('/api/me')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.address) setAddress(data.address);
+      })
+      .catch((e) => console.warn('Session restore failed:', e))
+      .finally(() => setIsConnecting(false));
   }, []);
 
   const connect = useCallback(async () => {
     setIsConnecting(true);
     try {
-      if (await isConnected()) {
-        const pubKeyRes: any = await requestAccess();
-        const pubKey = typeof pubKeyRes === 'string' ? pubKeyRes : pubKeyRes?.address;
-        if (pubKey && typeof pubKey === 'string') {
-          // Authentication message
-          const message = `Sign this message to verify your wallet for FragmentFi: ${Date.now()}`;
-          const sigResult = await signMessage(message, { network: 'TESTNET' }) as any;
-          
-          let signatureStr = "";
-          if (typeof sigResult === 'string') {
-            signatureStr = sigResult;
-          } else if (sigResult instanceof Uint8Array) {
-            signatureStr = btoa(String.fromCharCode.apply(null, Array.from(sigResult)));
-          } else if (sigResult?.signature) {
-            if (typeof sigResult.signature === 'string') {
-              signatureStr = sigResult.signature;
-            } else if (sigResult.signature instanceof Uint8Array) {
-              signatureStr = btoa(String.fromCharCode.apply(null, Array.from(sigResult.signature)));
-            }
-          }
+      // requestAccess prompts Freighter — works whether or not already connected
+      const accessRes: any = await requestAccess();
+      const pubKey =
+        typeof accessRes === 'string'
+          ? accessRes
+          : accessRes?.address ?? null;
 
-          // Send to API
-          const res = await fetch('/api/auth/verify', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ address: pubKey, message, signature: signatureStr })
-          });
-
-          if (res.ok) {
-            setAddress(pubKey);
-            window.location.href = '/dashboard';
-          } else {
-            console.error("Verification failed");
-          }
-        }
-      } else {
-        alert('Please install Freighter extension.');
+      if (!pubKey || typeof pubKey !== 'string') {
+        alert('Could not get wallet address. Please unlock Freighter and try again.');
+        return;
       }
-    } catch (e) {
-      console.error(e);
+
+      // Verify with backend — now DB-independent, always instant
+      const res = await fetch('/api/auth/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ address: pubKey }),
+      });
+
+      if (res.ok) {
+        setAddress(pubKey);
+        window.location.replace('/dashboard');
+      } else {
+        const err = await res.json().catch(() => ({}));
+        console.error('Auth failed:', err);
+        alert('Wallet verification failed. Please try again.');
+      }
+    } catch (e: any) {
+      if (e?.message?.toLowerCase().includes('declined') || e?.message?.toLowerCase().includes('rejected')) {
+        alert('You declined the connection request in Freighter.');
+      } else {
+        console.error('Connect error:', e);
+        alert('Failed to connect. Is Freighter installed and unlocked?');
+      }
     } finally {
       setIsConnecting(false);
     }
   }, []);
 
   const disconnect = useCallback(async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (e) {
+      console.warn('Logout API call failed, clearing state anyway');
+    }
     setAddress(null);
-    window.location.href = '/';
+    window.location.replace('/');
   }, []);
 
-  return {
-    address,
-    isConnecting,
-    connect,
-    disconnect,
-    signTransaction
-  };
+  return { address, isConnecting, connect, disconnect, signTransaction };
 }
