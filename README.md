@@ -124,6 +124,12 @@ Below is a detailed log of the user reviews, including the commit links where th
 | :---: | :---: |
 | ![Reserves Page](assets/web/reserves.png) | ![History Page](assets/web/history.png) |
 
+### 📱 Mobile Views
+
+| **Landing Page** | **Portfolio Dashboard** |
+| :---: | :---: |
+| ![Mobile Landing](assets/mobile/mobile-landing.png) | ![Mobile Dashboard](assets/mobile/mobile-dashboard.png) |
+
 ---
 
 ## 📊 Technical Deep Dive
@@ -255,6 +261,9 @@ To run automated E2E tests locally:
 ```bash
 npx playwright test
 ```
+
+#### E2E Test Execution Proof
+![Playwright E2E Test Results](assets/test-screenshot.png)
 
 ---
 
