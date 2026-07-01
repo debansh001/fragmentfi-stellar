@@ -1,0 +1,14 @@
+[package]
+name = "yield-distributor"
+version = "0.0.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
+frag-token = { path = "../frag_token" }
+
+[dev_dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
