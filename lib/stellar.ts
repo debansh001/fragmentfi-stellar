@@ -1,12 +1,13 @@
 import { 
   TransactionBuilder, 
   Networks, 
-  SorobanRpc, 
+  rpc, 
   Contract, 
   xdr, 
   nativeToScVal, 
   scValToNative,
-  Address 
+  Address,
+  Account
 } from 'stellar-sdk';
 
 const FRAG_CONTRACT_ID = process.env.NEXT_PUBLIC_FRAG_CONTRACT_ID || 'CDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
@@ -14,10 +15,10 @@ const TREASURY_CONTRACT_ID = process.env.NEXT_PUBLIC_TREASURY_CONTRACT_ID || 'CT
 const RPC_URL = 'https://soroban-testnet.stellar.org';
 const NETWORK_PASSPHRASE = Networks.TESTNET;
 
-// Lazy-init: avoid module-level crash if SorobanRpc is not ready at import time
-let _server: InstanceType<typeof SorobanRpc.Server> | null = null;
+// Lazy-init: avoid module-level crash if rpc is not ready at import time
+let _server: InstanceType<typeof rpc.Server> | null = null;
 function getServer() {
-  if (!_server) _server = new SorobanRpc.Server(RPC_URL);
+  if (!_server) _server = new rpc.Server(RPC_URL);
   return _server;
 }
 
@@ -93,7 +94,7 @@ export async function getFragBalance(walletAddress: string): Promise<string> {
     const contract = new Contract(FRAG_CONTRACT_ID);
     
     // Create a simulation transaction just to read state
-    const sourceAccount = new SorobanRpc.Account(walletAddress, "0"); // Sequence 0 is fine for read-only simulation
+    const sourceAccount = new Account(walletAddress, "0"); // Sequence 0 is fine for read-only simulation
     
     const tx = new TransactionBuilder(sourceAccount, {
       fee: '100',
@@ -107,12 +108,12 @@ export async function getFragBalance(walletAddress: string): Promise<string> {
 
     const simResponse = await getServer().simulateTransaction(tx);
     
-    if (SorobanRpc.Api.isSimulationError(simResponse)) {
+    if (rpc.Api.isSimulationError(simResponse)) {
       console.error("Simulation error: ", simResponse.error);
       return "0";
     }
 
-    if (SorobanRpc.Api.isSimulationSuccess(simResponse)) {
+    if (rpc.Api.isSimulationSuccess(simResponse)) {
       if (simResponse.result && simResponse.result.retval) {
         // Parse returned i128
         const resultVal = scValToNative(simResponse.result.retval);

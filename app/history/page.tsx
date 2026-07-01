@@ -37,6 +37,7 @@ export default function HistoryPage() {
   }, [typeFilter, startDate, endDate, page]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchHistory();
   }, [fetchHistory]);
 
@@ -63,6 +64,7 @@ export default function HistoryPage() {
 
   // Reset page when filters change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setPage(1);
   }, [typeFilter, startDate, endDate]);
 

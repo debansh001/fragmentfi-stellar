@@ -48,8 +48,8 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       // 2. Sign via Freighter (Mocking if signing fails to allow local test flow)
       let signedXdr = xdr;
       try {
-        signedXdr = await signTransaction(xdr, { network: 'TESTNET' });
-      } catch (e) {
+        const res = await signTransaction(xdr, { networkPassphrase: 'Test SDF Network ; September 2015' }); if (res.signedTxXdr) signedXdr = res.signedTxXdr;
+      } catch (e: any) {
         console.warn("Freighter signing skipped or failed. Proceeding with mock signature for dev.", e);
         // We continue with mock flow if freighter rejects/fails in dev environment.
       }

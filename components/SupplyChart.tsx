@@ -21,7 +21,7 @@ export default function SupplyChart({ currentSupply }: SupplyChartProps) {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
       history.push({
         month: months[d.getMonth()],
-        supply: i === 0 ? currentSupply : Math.max(0, baseSupply + (Math.random() * step * 0.5)),
+        supply: i === 0 ? currentSupply : Math.max(0, baseSupply + (0.5 * step * 0.5)),
       });
       baseSupply += step;
     }
@@ -61,7 +61,7 @@ export default function SupplyChart({ currentSupply }: SupplyChartProps) {
             />
             <Tooltip 
               contentStyle={{ borderRadius: '8px', border: '1px solid #e4e4e7', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
-              formatter={(value: number) => [value.toLocaleString(undefined, {maximumFractionDigits: 0}), 'Supply']}
+              formatter={(value: any) => [value.toLocaleString(undefined, {maximumFractionDigits: 0}), 'Supply']}
               cursor={{ fill: 'transparent' }}
             />
             <Bar 
