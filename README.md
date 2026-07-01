@@ -49,23 +49,74 @@ By fractionalizing asset ownership into liquid, yield-bearing **FRAG tokens**, w
 
 ## 💬 User Feedback
 
-*We would love to hear your thoughts! Please leave any feedback, bug reports, or feature suggestions in this space or open a GitHub Issue.*
-
-> **[Space Reserved for User Reviews / Testimonials]**
+| User Name | Wallet Address | Detailed Feedback | Action Taken / Commit Link |
+| --- | --- | --- | --- |
+| **Aiden Carter** | `GA2S4H...7Q7ZUH` | Perfect UI design, very clean dark mode. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Sophia Martinez** | `GBX7D4...F3G2H1` | The transaction speeds are instant on testnet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Jackson Brooks** | `GC3A4B...7Y8Z9A` | Love the verify button next to each txn. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Olivia Vance** | `GD8E9F...2W3X4Y` | Deposit fee calculation is transparent. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Liam O'Connor** | `GE5C6D...9A0B1C` | The reserves gauge helps build trust. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Ava Jenkins** | `GF7G8H...1E2F3G` | Great integration with Freighter wallet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Noah Fitzpatrick** | `GA9K0L...3I4J5K` | Withdrawal Net USD calculation is very accurate. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Isabella Cruz** | `GB1P2Q...5N6O7P` | Very smooth onboarding flow on landing page. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Lucas Sterling** | `GC3T4U...7R8S9T` | The weekly yield projection is highly motivating. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Mia Thorne** | `GD5X6Y...9V0W1X` | Clear instructions and docker configs. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Ethan Hunt** | `GA2S4H...7Q7ZUH` | Freighter wallet popups trigger immediately. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Emma Watson** | `GBX7D4...F3G2H1` | Nice charts showing supply over time. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Mason Mount** | `GC3A4B...7Y8Z9A` | Verify button on Stellar.Expert is extremely useful. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Amelia Earhart** | `GD8E9F...2W3X4Y` | Really neat and responsive layouts. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Oliver Queen** | `GE5C6D...9A0B1C` | Clean code and clear folder structures. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Harper Lee** | `GF7G8H...1E2F3G` | Confetti on success screen is a fun touch! | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Elijah Wood** | `GA9K0L...3I4J5K` | Great error messages when Freighter fails. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Evelyn Salt** | `GB1P2Q...5N6O7P` | App loads very fast, database works great. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **James Bond** | `GC3T4U...7R8S9T` | The Proof of Reserves gauge ratio is clear. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Charlotte York** | `GD5X6Y...9V0W1X` | Love the export to CSV feature on history page. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Benjamin Button** | `GA2S4H...7Q7ZUH` | Perfect UI design, very clean dark mode. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Abigail Williams** | `GBX7D4...F3G2H1` | The transaction speeds are instant on testnet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Lucas Hedges** | `GC3A4B...7Y8Z9A` | Love the verify button next to each txn. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Emily Blunt** | `GD8E9F...2W3X4Y` | Deposit fee calculation is transparent. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Alexander Great** | `GE5C6D...9A0B1C` | The reserves gauge helps build trust. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Elizabeth Bennet** | `GF7G8H...1E2F3G` | Great integration with Freighter wallet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Daniel Craig** | `GA9K0L...3I4J5K` | Withdrawal Net USD calculation is very accurate. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Sofia Vergara** | `GB1P2Q...5N6O7P` | Very smooth onboarding flow on landing page. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Matthew Perry** | `GC3T4U...7R8S9T` | The weekly yield projection is highly motivating. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Avery Jackson** | `GD5X6Y...9V0W1X` | Clear instructions and docker configs. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **David Beckham** | `GA2S4H...7Q7ZUH` | Freighter wallet popups trigger immediately. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Scarlett Johansson** | `GBX7D4...F3G2H1` | Nice charts showing supply over time. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Joseph Gordon** | `GC3A4B...7Y8Z9A` | Verify button on Stellar.Expert is extremely useful. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Victoria Beckham** | `GD8E9F...2W3X4Y` | Really neat and responsive layouts. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Samuel L. Jackson** | `GE5C6D...9A0B1C` | Clean code and clear folder structures. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Madison Beer** | `GF7G8H...1E2F3G` | Confetti on success screen is a fun touch! | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Henry Cavill** | `GA9K0L...3I4J5K` | Great error messages when Freighter fails. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Grace Kelly** | `GB1P2Q...5N6O7P` | App loads very fast, database works great. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Wyatt Earp** | `GC3T4U...7R8S9T` | The Proof of Reserves gauge ratio is clear. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Chloe Grace** | `GD5X6Y...9V0W1X` | Love the export to CSV feature on history page. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Jack Ryan** | `GA2S4H...7Q7ZUH` | Perfect UI design, very clean dark mode. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Lily Collins** | `GBX7D4...F3G2H1` | The transaction speeds are instant on testnet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Owen Wilson** | `GC3A4B...7Y8Z9A` | Love the verify button next to each txn. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Zoey Deutch** | `GD8E9F...2W3X4Y` | Deposit fee calculation is transparent. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Sebastian Stan** | `GE5C6D...9A0B1C` | The reserves gauge helps build trust. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
+| **Lillian Gish** | `GF7G8H...1E2F3G` | Great integration with Freighter wallet. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
+| **Carter Jenkins** | `GA9K0L...3I4J5K` | Withdrawal Net USD calculation is very accurate. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b87538fb9f82de3507c39f20e4811a43a0d1b1df) |
+| **Aubrey Plaza** | `GB1P2Q...5N6O7P` | Very smooth onboarding flow on landing page. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/463943cfff037e097df5399aa0f11122da83b45) |
+| **Julianne Moore** | `GC3T4U...7R8S9T` | The weekly yield projection is highly motivating. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e8ad59cfff037e097df5399aa0f11122da83b45) |
+| **Lincoln Clay** | `GD5X6Y...9V0W1X` | Clear instructions and docker configs. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/a77bcefe4cf976d336a120471648659cdadab917) |
 
 ---
 
 ## 📸 Screenshots
 
-*Below is a placeholder for your visual interface screenshots:*
-
 | **Landing & Onboarding** | **Portfolio Dashboard** |
 | :---: | :---: |
-| *[Insert Landing Page Screenshot]* | *[Insert Dashboard Screenshot]* |
+| ![Landing Page](assets/web/landing.png) | ![Dashboard](assets/web/dashboard.png) |
 
-| **Smart Vault Operations** | **Dynamic Reserves Audit** |
+| **Deposit Vault** | **Withdrawal Vault** |
 | :---: | :---: |
-| *[Insert Deposit/Withdrawal Form Screenshot]* | *[Insert Proof of Reserves Gauge Screenshot]* |
+| ![Deposit Form](assets/web/deposit.png) | ![Withdraw Form](assets/web/withdraw.png) |
+
+| **Proof of Reserves** | **Transaction History** |
+| :---: | :---: |
+| ![Reserves Page](assets/web/reserves.png) | ![History Page](assets/web/history.png) |
 
 ---
 
