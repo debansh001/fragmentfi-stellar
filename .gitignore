@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Rust / Soroban
+/target/
+**/*.rs.bk
+.soroban/
