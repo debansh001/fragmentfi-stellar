@@ -6,6 +6,7 @@ export default function ConnectWalletButton() {
   const { address, isConnecting, connect, disconnect } = useWallet();
 
   const formatAddress = (addr: string) => {
+    if (!addr || typeof addr !== 'string') return '';
     return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
   };
 

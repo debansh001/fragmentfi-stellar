@@ -18,8 +18,9 @@ export function useWallet() {
     const checkConnection = async () => {
       try {
         if (await isConnected()) {
-          const pubKey = await getAddress();
-          if (pubKey) setAddress(pubKey);
+          const pubKeyRes: any = await getAddress();
+          const pubKey = typeof pubKeyRes === 'string' ? pubKeyRes : pubKeyRes?.address;
+          if (pubKey && typeof pubKey === 'string') setAddress(pubKey);
         }
       } catch (e) {
         console.error("Failed to get address automatically", e);
@@ -32,11 +33,12 @@ export function useWallet() {
     setIsConnecting(true);
     try {
       if (await isConnected()) {
-        const pubKey = await requestAccess();
-        if (pubKey) {
+        const pubKeyRes: any = await requestAccess();
+        const pubKey = typeof pubKeyRes === 'string' ? pubKeyRes : pubKeyRes?.address;
+        if (pubKey && typeof pubKey === 'string') {
           // Authentication message
           const message = `Sign this message to verify your wallet for FragmentFi: ${Date.now()}`;
-          const sigResult = await signMessage({ message, network: 'TESTNET' }) as any;
+          const sigResult = await signMessage(message, { network: 'TESTNET' }) as any;
           
           let signatureStr = "";
           if (typeof sigResult === 'string') {
