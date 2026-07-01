@@ -1,0 +1,48 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# CI / tooling
+.github
+.husky
+.eslintrc*
+.eslintignore
+.prettierrc*
+.prettierignore
+
+# Next.js cache & build artifacts (rebuilt inside Docker)
+.next
+out
+
+# Node modules (reinstalled inside Docker)
+node_modules
+
+# Environment files (secrets must never be baked into the image)
+.env
+.env.*
+!.env.example
+
+# Rust / Soroban contracts (not needed in the web image)
+target
+contracts
+Cargo.toml
+Cargo.lock
+
+# Docker files themselves
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Docs and misc
+README.md
+LICENSE
+*.md
+*.log
+*.sh
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+.vscode
+.idea
