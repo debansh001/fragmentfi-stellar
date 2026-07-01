@@ -1,9 +1,16 @@
 #![no_std]
 use soroban_sdk::{contract, contractimpl, contracttype, token, Address, Env};
-use frag_token::FragTokenClient;
+
+mod frag_token_contract {
+    soroban_sdk::contractimport!(
+        file = "../../target/wasm/frag_token/frag_token.wasm"
+    );
+}
+
+use frag_token_contract::Client as FragTokenClient;
 
 #[contracttype]
-pub enum DataKey {
+pub enum StorageKey {
     FragToken,
     XlmToken,
     Admin,
@@ -15,12 +22,12 @@ pub struct TreasuryPool;
 #[contractimpl]
 impl TreasuryPool {
     pub fn initialize(env: Env, admin: Address, frag_token: Address, xlm_token: Address) {
-        if env.storage().instance().has(&DataKey::Admin) {
+        if env.storage().instance().has(&StorageKey::Admin) {
             panic!("already initialized");
         }
-        env.storage().instance().set(&DataKey::Admin, &admin);
-        env.storage().instance().set(&DataKey::FragToken, &frag_token);
-        env.storage().instance().set(&DataKey::XlmToken, &xlm_token);
+        env.storage().instance().set(&StorageKey::Admin, &admin);
+        env.storage().instance().set(&StorageKey::FragToken, &frag_token);
+        env.storage().instance().set(&StorageKey::XlmToken, &xlm_token);
     }
 
     pub fn deposit(env: Env, user: Address, amount: i128) {
@@ -30,8 +37,8 @@ impl TreasuryPool {
             panic!("amount must be positive");
         }
 
-        let xlm_token: Address = env.storage().instance().get(&DataKey::XlmToken).unwrap();
-        let frag_token: Address = env.storage().instance().get(&DataKey::FragToken).unwrap();
+        let xlm_token: Address = env.storage().instance().get(&StorageKey::XlmToken).unwrap();
+        let frag_token: Address = env.storage().instance().get(&StorageKey::FragToken).unwrap();
 
         // Transfer XLM from user to pool
         let xlm_client = token::Client::new(&env, &xlm_token);
@@ -49,8 +56,8 @@ impl TreasuryPool {
             panic!("amount must be positive");
         }
 
-        let xlm_token: Address = env.storage().instance().get(&DataKey::XlmToken).unwrap();
-        let frag_token: Address = env.storage().instance().get(&DataKey::FragToken).unwrap();
+        let xlm_token: Address = env.storage().instance().get(&StorageKey::XlmToken).unwrap();
+        let frag_token: Address = env.storage().instance().get(&StorageKey::FragToken).unwrap();
 
         // Burn FRAG from user
         let frag_client = FragTokenClient::new(&env, &frag_token);
@@ -62,13 +69,13 @@ impl TreasuryPool {
     }
 
     pub fn get_pool_balance(env: Env) -> i128 {
-        let xlm_token: Address = env.storage().instance().get(&DataKey::XlmToken).unwrap();
+        let xlm_token: Address = env.storage().instance().get(&StorageKey::XlmToken).unwrap();
         let xlm_client = token::Client::new(&env, &xlm_token);
         xlm_client.balance(&env.current_contract_address())
     }
 
     pub fn get_reserve_ratio(env: Env) -> i128 {
-        let frag_token: Address = env.storage().instance().get(&DataKey::FragToken).unwrap();
+        let frag_token: Address = env.storage().instance().get(&StorageKey::FragToken).unwrap();
         let frag_client = FragTokenClient::new(&env, &frag_token);
         let supply = frag_client.total_supply();
         
@@ -81,7 +88,7 @@ impl TreasuryPool {
     }
 
     pub fn get_user_share(env: Env, user: Address) -> i128 {
-        let frag_token: Address = env.storage().instance().get(&DataKey::FragToken).unwrap();
+        let frag_token: Address = env.storage().instance().get(&StorageKey::FragToken).unwrap();
         let frag_client = FragTokenClient::new(&env, &frag_token);
         frag_client.balance(&user)
     }
