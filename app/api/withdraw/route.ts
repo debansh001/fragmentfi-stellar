@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     }
 
     // Update the database transactionally
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       // 1. Insert transaction record
       await tx.transaction.create({
         data: {

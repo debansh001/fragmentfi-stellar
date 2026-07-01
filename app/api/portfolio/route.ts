@@ -31,7 +31,7 @@ export async function GET() {
       })
     ]);
 
-    const totalYield = yieldDistributions.reduce((acc, curr) => acc + curr.amount, 0);
+    const totalYield = yieldDistributions.reduce((acc: any, curr: any) => acc + curr.amount, 0);
 
     return NextResponse.json({
       portfolio: portfolio || { frag_balance: 0, usd_value: 0 },

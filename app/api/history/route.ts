@@ -50,7 +50,7 @@ export async function GET(req: Request) {
       });
       
       const csvHeader = 'ID,Type,Amount (USD),FRAG Delta,Transaction Hash,Timestamp\n';
-      const csvRows = allTxns.map(tx => 
+      const csvRows = allTxns.map((tx: any) => 
         `${tx.id},${tx.type},${tx.amount_usd},${tx.frag_delta},${tx.txn_hash || ''},${tx.timestamp.toISOString()}`
       ).join('\n');
       
@@ -82,7 +82,7 @@ export async function GET(req: Request) {
     });
     
     const summary = allUserTxns.reduce(
-      (acc, tx) => {
+      (acc: any, tx: any) => {
         if (tx.type === 'DEPOSIT') acc.totalDeposited += tx.amount_usd;
         if (tx.type === 'WITHDRAWAL') acc.totalWithdrawn += tx.amount_usd;
         if (tx.type === 'YIELD') acc.totalYieldFrag += tx.frag_delta;

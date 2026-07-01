@@ -129,7 +129,7 @@ export default function LandingPage() {
               <div className="pt-8 sm:inline-block sm:w-full sm:px-4">
                 <figure className="rounded-2xl bg-muted/50 p-8 text-sm leading-6 border border-border">
                   <blockquote className="text-foreground">
-                    <p>“I love the transparency. Clicking straight from the dashboard to the Stellar Expert block explorer and seeing the reserve ratio >100% gives me total peace of mind.”</p>
+                    <p className="text-muted-foreground mt-4">“The transparency is what sold me. Being able to click through to the Stellar block explorer and seeing the reserve ratio &gt;100% gives me total peace of mind.”</p>
                   </blockquote>
                   <figcaption className="mt-6 flex items-center gap-x-4">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold">SJ</div>
