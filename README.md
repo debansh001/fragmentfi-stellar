@@ -49,6 +49,12 @@ By fractionalizing asset ownership into liquid, yield-bearing **FRAG tokens**, w
 
 ## 💬 User Feedback
 
+We value your feedback! Feel free to share your thoughts, rate the experience, and report bugs:
+*   📝 **Submit Feedback (Google Form):** [Google Form Link](https://forms.gle/NiVTmRWZgQGyu4nB9)
+*   📊 **View Live Responses (Google Sheets):** [Google Sheets Link](https://docs.google.com/spreadsheets/d/1ynBf7Bb4vya0oh2T1y-NJ3S5BV58U01VtmUqUxHWAAU/edit?resourcekey=&gid=657386317#gid=657386317)
+
+Below is a detailed log of the user reviews, including the commit links where the feedback issues are addressed:
+
 | User Name | Wallet Address | Detailed Feedback | Action Taken / Commit Link |
 | --- | --- | --- | --- |
 | **Aiden Carter** | `GA2S4H...7Q7ZUH` | Perfect UI design, very clean dark mode. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0952cd9cfff037e097df5399aa0f11122da83b45) |
