@@ -1,0 +1,66 @@
+name: Soroban Contracts
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'contracts/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'contracts/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+
+jobs:
+  contracts:
+    name: Build & Test Soroban Contracts
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust stable toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Add wasm32 target (explicit)
+        run: rustup target add wasm32-unknown-unknown
+
+      - name: Cache Cargo registry and target directory
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+
+      - name: Install stellar-cli
+        run: cargo install --locked stellar-cli --features opt
+
+      - name: Build contracts (wasm32 release)
+        run: cargo build --release --target wasm32-unknown-unknown
+
+      - name: Run contract tests
+        run: cargo test
+
+      - name: Show WASM file sizes
+        run: |
+          echo "=== WASM Output Sizes ==="
+          find target/wasm32-unknown-unknown/release -name "*.wasm" -not -name "*-opt.wasm" | while read f; do
+            size=$(wc -c < "$f")
+            echo "  $(basename $f): $(echo "scale=2; $size/1024" | bc) KB"
+          done
