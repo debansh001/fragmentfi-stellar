@@ -6,7 +6,8 @@ const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
 );
 
-const PROTECTED = ['/dashboard', '/deposit', '/withdraw', '/reserves', '/history'];
+// reserves is a public transparency page, it should not be protected
+const PROTECTED = ['/dashboard', '/deposit', '/withdraw', '/history'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -36,7 +37,6 @@ export const config = {
     '/dashboard/:path*',
     '/deposit/:path*',
     '/withdraw/:path*',
-    '/reserves/:path*',
     '/history/:path*',
   ],
 };
