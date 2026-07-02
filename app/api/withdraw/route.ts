@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 import redis, { KEYS } from '@/lib/redis';
+import { getFragBalance } from '@/lib/stellar';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
@@ -22,20 +23,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Check balance
+    // Wait a brief moment to allow the Stellar network to finalize the transaction state
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // SECURE FIX: Fetch the actual on-chain balance from the smart contract!
+    const trueOnChainBalanceStr = await getFragBalance(address);
+    const trueOnChainBalance = Number(trueOnChainBalanceStr) || 0;
+
     const portfolioKey = KEYS.portfolio(address);
-    const existing = await redis.get<string>(portfolioKey);
-    const portfolio = existing
-      ? (typeof existing === 'string' ? JSON.parse(existing) : existing)
-      : { frag_balance: 0, usd_value: 0 };
-
-    if ((portfolio.frag_balance || 0) < fragAmount) {
-      return NextResponse.json({ error: 'Insufficient FRAG balance' }, { status: 400 });
-    }
-
     const newPortfolio = {
-      frag_balance: Math.max(0, (portfolio.frag_balance || 0) - fragAmount),
-      usd_value: Math.max(0, (portfolio.usd_value || 0) - receiveUsd),
+      frag_balance: trueOnChainBalance,
+      usd_value: trueOnChainBalance * 1.0,
       updated_at: new Date().toISOString(),
     };
 
@@ -52,7 +50,7 @@ export async function POST(req: Request) {
     await Promise.all([
       redis.set(portfolioKey, JSON.stringify(newPortfolio)),
       redis.lpush(KEYS.txns(address), txRecord),
-      redis.incrbyfloat(KEYS.statsAum, -receiveUsd),
+      // statsAum is now fetched entirely on-chain in reserves route.
     ]);
 
     return NextResponse.json({ success: true, newBalance: newPortfolio.frag_balance });

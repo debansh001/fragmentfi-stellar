@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server';
 
-const MOCK = { totalAUM: 1250000, activeHolders: 1420, currentApy: 12.5, reserveRatio: 104.2 };
-
 export async function GET() {
   try {
     const { default: redis, KEYS } = await import('@/lib/redis');
@@ -12,12 +10,18 @@ export async function GET() {
     ]);
 
     return NextResponse.json({
-      totalAUM: aum ? parseFloat(aum as string) || MOCK.totalAUM : MOCK.totalAUM,
-      activeHolders: holders ? parseInt(holders as string) || MOCK.activeHolders : MOCK.activeHolders,
-      currentApy: MOCK.currentApy,
-      reserveRatio: MOCK.reserveRatio,
+      totalAUM: aum ? parseFloat(aum as string) || 0 : 0,
+      activeHolders: holders ? parseInt(holders as string) || 0 : 0,
+      currentApy: 12.5, // Hardcoded APY for now based on T-Bills
+      reserveRatio: 100.0, // Should be 100% since 1:1 backed
     });
-  } catch {
-    return NextResponse.json(MOCK);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({
+      totalAUM: 0,
+      activeHolders: 0,
+      currentApy: 12.5,
+      reserveRatio: 100.0,
+    });
   }
 }

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { jwtVerify } from 'jose';
 import redis, { KEYS } from '@/lib/redis';
+import { getFragBalance } from '@/lib/stellar';
 
 const JWT_SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'fallback-secret-for-dev-only'
@@ -31,15 +32,23 @@ export async function GET() {
       await redis.set(userKey, JSON.stringify({ wallet_address: address, created_at: new Date().toISOString() }));
     }
 
-    const [portfolioRaw, txnsRaw, yieldRaw] = await Promise.all([
-      redis.get<string>(KEYS.portfolio(address)),
+    // Always fetch true on-chain balance for portfolio!
+    // This removes relying strictly on our cached database, guaranteeing the dashboard is accurate.
+    const trueOnChainBalanceStr = await getFragBalance(address);
+    const trueOnChainBalance = Number(trueOnChainBalanceStr) || 0;
+    const portfolio = {
+      frag_balance: trueOnChainBalance,
+      usd_value: trueOnChainBalance * 1.0,
+      updated_at: new Date().toISOString(),
+    };
+    
+    // Sync the cache while we're at it
+    await redis.set(KEYS.portfolio(address), JSON.stringify(portfolio));
+
+    const [txnsRaw, yieldRaw] = await Promise.all([
       redis.lrange(KEYS.txns(address), 0, 4),
       redis.lrange(KEYS.yield(address), 0, -1),
     ]);
-
-    const portfolio = portfolioRaw
-      ? (typeof portfolioRaw === 'string' ? JSON.parse(portfolioRaw) : portfolioRaw)
-      : { frag_balance: 0, usd_value: 0 };
 
     const recentTransactions = (txnsRaw || []).map((t: any) =>
       typeof t === 'string' ? JSON.parse(t) : t
@@ -55,7 +64,7 @@ export async function GET() {
       portfolio,
       recentTransactions,
       totalYield,
-      currentApy: 12.5,
+      currentApy: 12.5, // Keeping visual mock of APY for demo purposes
     });
   } catch (error) {
     console.error('Portfolio API Error:', error);

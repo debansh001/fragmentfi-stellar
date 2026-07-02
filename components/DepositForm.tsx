@@ -45,17 +45,28 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       // 1. Build Transaction
       const xdr = await buildDepositTransaction(address, numAmount.toString(), asset);
       
-      // 2. Sign via Freighter (Mocking if signing fails to allow local test flow)
+      // 2. Sign via Freighter & Submit
       let signedXdr = xdr;
+      let finalTxHash = '';
       try {
-        const res = await signTransaction(xdr, { networkPassphrase: 'Test SDF Network ; September 2015' }); if (res.signedTxXdr) signedXdr = res.signedTxXdr;
+        const res = await signTransaction(xdr, { networkPassphrase: 'Test SDF Network ; September 2015' }); 
+        if (res.signedTxXdr) {
+          signedXdr = res.signedTxXdr;
+        }
+        
+        // 3. Submit to Stellar Network
+        const { submitSignedTransaction } = await import('@/lib/stellar');
+        finalTxHash = await submitSignedTransaction(signedXdr);
       } catch (e: any) {
-        console.warn("Freighter signing skipped or failed. Proceeding with mock signature for dev.", e);
-        // We continue with mock flow if freighter rejects/fails in dev environment.
+        console.error("Freighter signing or network submission failed.", e);
+        const errMsg = e?.message || "";
+        if (errMsg.toLowerCase().includes("user declined") || errMsg.toLowerCase().includes("rejected")) {
+          throw new Error("Transaction cancelled in wallet.");
+        }
+        throw new Error(errMsg || "Failed to sign or submit transaction to network.");
       }
 
-      // 3. Submit to API to record transaction and update balance
-      const txHash = 'mock_hash_' + Date.now();
+      // 4. Submit to API to record transaction and update balance
       const res = await fetch('/api/deposit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -63,7 +74,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
           amountUsd: usdValue,
           fragDelta: finalFrag,
           asset,
-          txHash
+          txHash: finalTxHash
         })
       });
 
@@ -74,7 +85,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       const data = await res.json();
       
       // 4. Success callback
-      onSuccess(finalFrag, data.newBalance, txHash);
+      onSuccess(finalFrag, data.newBalance, finalTxHash);
 
     } catch (e: any) {
       console.error(e);

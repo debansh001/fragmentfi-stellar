@@ -24,14 +24,8 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav (Removed Dashboard and Deposit) */}
         <div className="hidden md:flex items-center space-x-6 text-sm font-medium ml-6">
-          <Link href="/dashboard" className={`transition-colors hover:text-foreground/80 ${pathname === '/dashboard' ? 'text-foreground' : 'text-foreground/60'}`}>
-            Dashboard
-          </Link>
-          <Link href="/deposit" className={`transition-colors hover:text-foreground/80 ${pathname === '/deposit' ? 'text-foreground' : 'text-foreground/60'}`}>
-            Deposit
-          </Link>
         </div>
 
         {/* Wallet & Mobile Toggle */}
@@ -55,12 +49,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-border p-4 bg-background">
           <div className="flex flex-col space-y-4">
-            <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground/80 hover:text-foreground">
-              Dashboard
-            </Link>
-            <Link href="/deposit" onClick={() => setIsMobileMenuOpen(false)} className="text-sm font-medium text-foreground/80 hover:text-foreground">
-              Deposit
-            </Link>
+
             <ConnectWalletButton />
           </div>
         </div>
