@@ -23,8 +23,8 @@
 
 ## 🔗 Project Links
 
-*   **Vercel Live Deployment:** [https://fragmentfi-stellar.vercel.app/](https://fragmentfi-stellar.vercel.app/)
-*   **Demo Video Walkthrough:** [https://youtu.be/OG6kS41sLGg](https://youtu.be/OG6kS41sLGg)
+*   **Vercel Live Deployment :** [https://fragmentfi-stellar.vercel.app/](https://fragmentfi-stellar.vercel.app/)
+*   **Demo Video Walkthrough :** [https://youtu.be/CPQYAlBt0d8](https://youtu.be/CPQYAlBt0d8)
 
 ---
 
@@ -155,9 +155,9 @@ Below is a detailed log of the user reviews, including the commit links where th
 ### Blockchain & Smart Contract Details
 | Smart Contract | Contract ID | Verification Link (Stellar.Expert) |
 | :--- | :--- | :--- |
-| **FRAG Token** | `CBZ4JGP7252NZLB3XPRKKD2JEVTVNLK763B3CWNKJSLCR2UDABRFEEUT` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBZ4JGP7252NZLB3XPRKKD2JEVTVNLK763B3CWNKJSLCR2UDABRFEEUT) |
-| **Treasury Pool** | `CADT5HICHEOLODCTCOLVEBC2UX6EAX2RD5WHO5JBBENM4W6H4DZDAYCE` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CADT5HICHEOLODCTCOLVEBC2UX6EAX2RD5WHO5JBBENM4W6H4DZDAYCE) |
-| **Yield Distributor** | `CAQIARO33MYC7Y6BJU5GQAAZK5YPECQ2MLUHBYML3R534QTFHJJFQXGJ` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CAQIARO33MYC7Y6BJU5GQAAZK5YPECQ2MLUHBYML3R534QTFHJJFQXGJ) |
+| **FRAG Token** | `CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV) |
+| **Treasury Pool** | `CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW) |
+| **Yield Distributor** | `CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS) |
 
 ---
 
@@ -293,9 +293,9 @@ npx playwright test
     UPSTASH_REDIS_REST_URL="your-upstash-redis-url"
     UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
     JWT_SECRET="your-jwt-signing-secret"
-    NEXT_PUBLIC_FRAG_CONTRACT_ID="CBZ4JGP7252NZLB3XPRKKD2JEVTVNLK763B3CWNKJSLCR2UDABRFEEUT"
-    NEXT_PUBLIC_TREASURY_CONTRACT_ID="CADT5HICHEOLODCTCOLVEBC2UX6EAX2RD5WHO5JBBENM4W6H4DZDAYCE"
-    NEXT_PUBLIC_YIELD_CONTRACT_ID="CAQIARO33MYC7Y6BJU5GQAAZK5YPECQ2MLUHBYML3R534QTFHJJFQXGJ"
+    NEXT_PUBLIC_FRAG_CONTRACT_ID="CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV"
+    NEXT_PUBLIC_TREASURY_CONTRACT_ID="CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW"
+    NEXT_PUBLIC_YIELD_CONTRACT_ID="CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS"
     ```
 4.  **Run Dev Server:**
     ```bash
