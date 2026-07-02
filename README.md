@@ -28,6 +28,9 @@
 
 ---
 
+## Pitch Deck : 
+* **PPT Link :** [ FragmentFi.pdf](https://drive.google.com/file/d/17PqbAhDwsV5Ks_2KE1hgwT7zs6QtPOkz/view?usp=sharing) 
+
 ## 💡 About The Product
 
 ### The Problem We Solve
