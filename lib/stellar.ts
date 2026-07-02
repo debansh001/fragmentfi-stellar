@@ -7,11 +7,13 @@ import {
   scValToNative,
   Address,
   Account,
+  Keypair,
   xdr as StellarXdr,
 } from 'stellar-sdk';
 
 const FRAG_CONTRACT_ID = process.env.NEXT_PUBLIC_FRAG_CONTRACT_ID || 'CDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 const TREASURY_CONTRACT_ID = process.env.NEXT_PUBLIC_TREASURY_CONTRACT_ID || 'CTREASURYXTESTXCONTRACTXIDXXXXXXXXXXXXXXXXXXXXXXXX';
+const YIELD_CONTRACT_ID = process.env.NEXT_PUBLIC_YIELD_CONTRACT_ID || 'CYIELDXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 const RPC_URL = 'https://soroban-testnet.stellar.org';
 const NETWORK_PASSPHRASE = Networks.TESTNET;
 
@@ -256,8 +258,124 @@ export async function submitSignedTransaction(signedXdr: string): Promise<string
     const humanError = decodeErrorResult(
       (response as any).errorResultXdr ?? (response as any).errorResult
     );
-    console.error("Tx failed on ledger:", response);
     throw new Error(humanError);
+  }
+  return response.hash;
+}
+
+export async function buildTakeSnapshotTransaction(userAddress: string): Promise<string> {
+  const account = await getServer().getAccount(userAddress);
+  const contract = new Contract(YIELD_CONTRACT_ID);
+  
+  const tx = new TransactionBuilder(account, {
+    fee: '100000',
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(
+      contract.call(
+        "take_snapshot",
+        new Address(userAddress).toScVal()
+      )
+    )
+    .setTimeout(300)
+    .build();
+
+  const simResult = await getServer().simulateTransaction(tx);
+  if (rpc.Api.isSimulationError(simResult)) {
+    throw new Error(`Transaction simulation failed: ${simResult.error}`);
+  }
+  const assembledTx = rpc.assembleTransaction(tx, simResult).build();
+  return assembledTx.toXDR();
+}
+
+export async function buildDistributeTransaction(adminAddress: string, poolBalanceXlm: string): Promise<string> {
+  const account = await getServer().getAccount(adminAddress);
+  const contract = new Contract(YIELD_CONTRACT_ID);
+  
+  // Convert XLM amount to stroops (i128)
+  const poolBalanceStroops = BigInt(Math.floor(parseFloat(poolBalanceXlm) * 10_000_000));
+
+  const tx = new TransactionBuilder(account, {
+    fee: '100000',
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(
+      contract.call(
+        "distribute",
+        nativeToScVal(poolBalanceStroops, { type: 'i128' })
+      )
+    )
+    .setTimeout(300)
+    .build();
+
+  const simResult = await getServer().simulateTransaction(tx);
+  if (rpc.Api.isSimulationError(simResult)) {
+    throw new Error(`Transaction simulation failed: ${simResult.error}`);
+  }
+  const assembledTx = rpc.assembleTransaction(tx, simResult).build();
+  return assembledTx.toXDR();
+}
+
+export async function buildClaimYieldTransaction(userAddress: string): Promise<string> {
+  const account = await getServer().getAccount(userAddress);
+  const contract = new Contract(YIELD_CONTRACT_ID);
+  
+  const tx = new TransactionBuilder(account, {
+    fee: '100000',
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(
+      contract.call(
+        "claim_yield",
+        new Address(userAddress).toScVal()
+      )
+    )
+    .setTimeout(300)
+    .build();
+
+  const simResult = await getServer().simulateTransaction(tx);
+  if (rpc.Api.isSimulationError(simResult)) {
+    throw new Error(`Transaction simulation failed: ${simResult.error}`);
+  }
+  const assembledTx = rpc.assembleTransaction(tx, simResult).build();
+  return assembledTx.toXDR();
+}
+
+/**
+ * Executes the distribute function directly from the backend using the Admin Secret Key.
+ * This is meant to be called by the automated Cron job.
+ */
+export async function executeDistributeCron(adminSecret: string, poolBalanceXlm: string): Promise<string> {
+  const keypair = Keypair.fromSecret(adminSecret);
+  const account = await getServer().getAccount(keypair.publicKey());
+  const contract = new Contract(YIELD_CONTRACT_ID);
+  
+  const poolBalanceStroops = BigInt(Math.floor(parseFloat(poolBalanceXlm) * 10_000_000));
+
+  const tx = new TransactionBuilder(account, {
+    fee: '100000',
+    networkPassphrase: NETWORK_PASSPHRASE,
+  })
+    .addOperation(
+      contract.call(
+        "distribute",
+        nativeToScVal(poolBalanceStroops, { type: 'i128' })
+      )
+    )
+    .setTimeout(300)
+    .build();
+
+  const simResult = await getServer().simulateTransaction(tx);
+  if (rpc.Api.isSimulationError(simResult)) {
+    throw new Error(`Cron distribution simulation failed: ${simResult.error}`);
+  }
+  
+  const assembledTx = rpc.assembleTransaction(tx, simResult).build();
+  assembledTx.sign(keypair); // Sign directly with the backend secret key!
+  
+  const response = await getServer().sendTransaction(assembledTx as any);
+  if (response.status === "ERROR") {
+    throw new Error(`Cron distribution network error`);
   }
   return response.hash;
 }

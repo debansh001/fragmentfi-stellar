@@ -111,7 +111,7 @@ export default function LandingPage() {
           <div className="mx-auto mt-16 flow-root max-w-2xl sm:mt-20 lg:mx-0 lg:max-w-none">
             <div className="-mt-8 sm:-mx-4 sm:columns-2 sm:text-[0] lg:columns-3">
               
-              <div className="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <div className="pt-8 sm:inline-block sm:w-full sm:px-4 break-inside-avoid">
                 <figure className="rounded-2xl bg-muted/50 p-8 text-sm leading-6 border border-border">
                   <blockquote className="text-foreground">
                     <p>“The easiest DeFi platform I've ever used. Connected Freighter, deposited XLM, and instantly started seeing yield. The instant withdrawals are a game changer.”</p>
@@ -126,10 +126,10 @@ export default function LandingPage() {
                 </figure>
               </div>
 
-              <div className="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <div className="pt-8 sm:inline-block sm:w-full sm:px-4 break-inside-avoid">
                 <figure className="rounded-2xl bg-muted/50 p-8 text-sm leading-6 border border-border">
                   <blockquote className="text-foreground">
-                    <p className="text-muted-foreground mt-4">“The transparency is what sold me. Being able to click through to the Stellar block explorer and seeing the reserve ratio &gt;100% gives me total peace of mind.”</p>
+                    <p>“The transparency is what sold me. Being able to click through to the Stellar block explorer and seeing the reserve ratio &gt;100% gives me total peace of mind.”</p>
                   </blockquote>
                   <figcaption className="mt-6 flex items-center gap-x-4">
                     <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-purple-400 to-pink-400 flex items-center justify-center text-white font-bold">SJ</div>
@@ -141,7 +141,7 @@ export default function LandingPage() {
                 </figure>
               </div>
 
-              <div className="pt-8 sm:inline-block sm:w-full sm:px-4">
+              <div className="pt-8 sm:inline-block sm:w-full sm:px-4 break-inside-avoid">
                 <figure className="rounded-2xl bg-muted/50 p-8 text-sm leading-6 border border-border">
                   <blockquote className="text-foreground">
                     <p>“Soroban smart contracts are incredibly fast. The UI is gorgeous, but the real star is how seamlessly it handles the complex bridging and token minting in the background.”</p>

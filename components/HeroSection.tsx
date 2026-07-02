@@ -40,7 +40,7 @@ export default function HeroSection({ apy }: HeroSectionProps) {
           </div>
           
           <h1 className="text-5xl font-extrabold tracking-tight text-foreground sm:text-7xl mb-6">
-            The simplest way to earn <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-400">{apy}% APY</span> on Stellar.
+            The simplest way to earn <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-emerald-400">{apy}% APY*</span> on Stellar.
           </h1>
           
           <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -59,6 +59,10 @@ export default function HeroSection({ apy }: HeroSectionProps) {
               How it works <span aria-hidden="true">↓</span>
             </a>
           </div>
+          
+          <p className="mt-8 text-xs text-muted-foreground opacity-70">
+            * The {apy}% APY is simulated on the Stellar Testnet for demonstration purposes only and doesn't reflect real-world performance.
+          </p>
         </motion.div>
       </div>
     </section>
