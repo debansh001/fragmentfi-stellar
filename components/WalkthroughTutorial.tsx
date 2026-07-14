@@ -35,6 +35,7 @@ export default function WalkthroughTutorial() {
     // Only show if they haven't completed it yet
     const hasCompleted = localStorage.getItem('hasCompletedWalkthrough');
     if (!hasCompleted) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsVisible(true);
     }
   }, []);

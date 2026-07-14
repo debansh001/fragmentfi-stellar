@@ -14,6 +14,7 @@ export function useWallet() {
   // Restore session from httpOnly cookie via /api/me
   useEffect(() => {
     const savedType = localStorage.getItem('fragmentfi_wallet_type') as WalletType;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (savedType) setWalletType(savedType);
 
     fetch('/api/me')
