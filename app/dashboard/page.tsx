@@ -5,6 +5,7 @@ import Link from 'next/link';
 import StatCard from '@/components/StatCard';
 import PortfolioChart from '@/components/PortfolioChart';
 import YieldCountdown from '@/components/YieldCountdown';
+import WalkthroughTutorial from '@/components/WalkthroughTutorial';
 
 interface DashboardData {
   portfolio: {
@@ -66,11 +67,13 @@ export default function DashboardPage() {
   const estimatedNextAmount = data.portfolio.frag_balance * dailyYieldRate;
 
   return (
-    <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground mt-1">Overview of your FragmentFi portfolio.</p>
-      </div>
+    <>
+      <WalkthroughTutorial />
+      <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <p className="text-muted-foreground mt-1">Overview of your FragmentFi portfolio.</p>
+        </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -157,6 +160,7 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

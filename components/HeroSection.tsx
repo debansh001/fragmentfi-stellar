@@ -1,8 +1,9 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useWallet } from '@/hooks/useWallet';
+import WalletConnectModal, { WalletType } from './WalletConnectModal';
 
 interface HeroSectionProps {
   apy: number;
@@ -10,12 +11,20 @@ interface HeroSectionProps {
 
 export default function HeroSection({ apy }: HeroSectionProps) {
   const { address, isConnecting, connect } = useWallet();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleStart = () => {
     if (!address) {
-      connect();
+      setIsModalOpen(true);
     } else {
       window.location.replace('/dashboard');
+    }
+  };
+
+  const handleConnect = (wallet: WalletType) => {
+    if (wallet) {
+      connect(wallet);
+      setIsModalOpen(false);
     }
   };
 
@@ -65,6 +74,13 @@ export default function HeroSection({ apy }: HeroSectionProps) {
           </p>
         </motion.div>
       </div>
+
+      <WalletConnectModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConnect={handleConnect}
+        isConnecting={isConnecting}
+      />
     </section>
   );
 }

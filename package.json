@@ -9,9 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@albedo-link/intent": "^0.13.0",
     "@neondatabase/serverless": "^1.1.0",
     "@prisma/adapter-neon": "^7.8.0",
     "@stellar/freighter-api": "^6.0.1",
+    "@stellar/stellar-sdk": "^16.0.1",
     "@upstash/redis": "^1.38.0",
     "@vercel/analytics": "^2.0.1",
     "canvas-confetti": "^1.9.4",
@@ -21,7 +23,6 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "^3.9.0",
-    "stellar-sdk": "^13.3.0",
     "ws": "^8.21.0"
   },
   "devDependencies": {
