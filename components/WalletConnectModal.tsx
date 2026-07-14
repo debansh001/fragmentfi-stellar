@@ -15,7 +15,7 @@ export default function WalletConnectModal({ isOpen, onClose, onConnect, isConne
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
       <div className="w-full max-w-sm rounded-2xl border border-border bg-background p-6 shadow-xl relative animate-in fade-in zoom-in duration-200">
         <button
           onClick={onClose}
