@@ -31,13 +31,29 @@ export async function POST(req: Request) {
       await redis.set(userKey, JSON.stringify({ wallet_address: address, created_at: new Date().toISOString() }));
     }
 
-    // Wait a brief moment to allow the Stellar network to finalize the transaction state,
-    // though the transaction is already submitted, Soroban node state might be slightly delayed.
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    // Fetch the old balance first
+    const oldBalanceStr = await getFragBalance(address);
+    const oldBalance = Number(oldBalanceStr) || 0;
 
-    // SECURE FIX: Fetch the actual on-chain balance from the smart contract!
-    const trueOnChainBalanceStr = await getFragBalance(address);
-    const trueOnChainBalance = Number(trueOnChainBalanceStr) || 0;
+    let trueOnChainBalance = oldBalance;
+    
+    // Poll for up to 8 seconds to allow the Stellar network to finalize the transaction state
+    for (let i = 0; i < 4; i++) {
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      const currentBalanceStr = await getFragBalance(address);
+      const currentBalance = Number(currentBalanceStr) || 0;
+      
+      if (currentBalance !== oldBalance) {
+        trueOnChainBalance = currentBalance;
+        break;
+      }
+    }
+
+    // If the network is extremely congested and still hasn't updated the RPC state,
+    // fallback to optimistic calculation to provide a smooth UX.
+    if (trueOnChainBalance === oldBalance) {
+      trueOnChainBalance = oldBalance + fragDelta;
+    }
 
     const portfolioKey = KEYS.portfolio(address);
     const existing = await redis.get<string>(portfolioKey);
