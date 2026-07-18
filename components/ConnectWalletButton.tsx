@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useWallet } from "@/hooks/useWallet";
 import WalletConnectModal, { WalletType } from "./WalletConnectModal";
 
@@ -20,18 +20,56 @@ export default function ConnectWalletButton() {
     }
   };
 
+  const [showCard, setShowCard] = useState(false);
+  const [balance, setBalance] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (address) {
+      fetch('/api/portfolio')
+        .then(res => res.json())
+        .then(data => {
+          if (data.portfolio) {
+            setBalance(data.portfolio.frag_balance);
+          }
+        })
+        .catch(e => console.error("Failed to fetch balance", e));
+    }
+  }, [address]);
+
   if (address) {
     return (
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-medium text-foreground bg-muted px-3 py-1.5 rounded-md border border-border">
-          {formatAddress(address)}
-        </span>
+      <div className="relative">
         <button 
-          onClick={disconnect}
-          className="text-xs font-medium text-muted-foreground hover:text-foreground underline underline-offset-2"
+          onClick={() => setShowCard(!showCard)}
+          className="text-sm font-medium text-foreground bg-muted hover:bg-muted/80 transition-colors px-3 py-1.5 rounded-md border border-border flex items-center gap-2"
         >
-          Disconnect
+          <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+          {formatAddress(address)}
         </button>
+        
+        {showCard && (
+          <div className="absolute right-0 mt-2 w-56 rounded-xl border border-border bg-background shadow-xl p-4 z-50 animate-in fade-in zoom-in duration-200">
+            <div className="flex flex-col gap-3">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Connected Wallet</p>
+                <p className="text-sm font-medium text-foreground font-mono break-all leading-tight">{formatAddress(address)}</p>
+              </div>
+              <div className="h-px bg-border w-full"></div>
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Balance</p>
+                <p className="text-lg font-bold text-foreground">
+                  {balance !== null ? `${balance.toFixed(2)} FRAG` : 'Loading...'}
+                </p>
+              </div>
+              <button 
+                onClick={disconnect}
+                className="mt-2 w-full text-xs font-medium text-red-500 hover:text-red-600 bg-red-500/10 hover:bg-red-500/20 py-2 rounded-md transition-colors"
+              >
+                Disconnect
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
