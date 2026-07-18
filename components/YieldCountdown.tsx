@@ -90,11 +90,21 @@ export default function YieldCountdown({ estimatedAmount }: YieldCountdownProps)
     } catch (e: any) {
       console.error(e);
       const errMsg = e?.message || "An error occurred.";
+      let friendlyError = "Transaction failed on the network.";
+      
       if (errMsg.toLowerCase().includes("user declined") || errMsg.toLowerCase().includes("rejected")) {
-        setActionStatus("Transaction cancelled in wallet.");
+        friendlyError = "Transaction cancelled in wallet.";
+      } else if (errMsg.includes("tx_too_late")) {
+        friendlyError = "Transaction expired. Please try again.";
+      } else if (errMsg.includes("op_bad_auth")) {
+        friendlyError = "Wallet authorization failed.";
+      } else if (errMsg.includes("op_underfunded")) {
+        friendlyError = "Insufficient XLM for fees.";
       } else {
-        setActionStatus(`Error: ${errMsg}`);
+        friendlyError = `Failed: Please try again later.`; 
       }
+      
+      setActionStatus(`Error: ${friendlyError}`);
     } finally {
       setIsProcessing(false);
     }
