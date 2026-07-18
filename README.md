@@ -58,15 +58,15 @@ We value your feedback! Feel free to share your thoughts, rate the experience, a
 
 Below is a detailed log of the latest user reviews, including the commit links where the feedback issues are addressed:
 
-| Full Name | Wallet Address | Type of User | Feature like most | Feature it's lacking | Specific feedback or suggestion | Github commit link |
-| --- | --- | --- | --- | --- | --- | --- |
-| **Saunak Basak** | `GAKJ6VMQSJQ7S55YNQUSBVETOTANGE3NTG4CHTW3IPOEAT7SXG6UZEWB` | - | - | NA | I liked it's UI its awesome. | - |
-| **Rupam Ghosh** | `GBV4FZVZKT26JNLAIMGSNUDDREZLP4ESPOMDA4X6LGBTLUP5XAP73TXI` | - | - | Work more on UI | Overall experience is good | - |
-| **Sadiya Mulani** | `GADSVJJYMZTCIDB4NVGXKKPNMNGAZRFXIV5534U7QK6R4IYNSWMZDA65` | - | - | Adding better loading states, clearer user guidance, and improved mobile responsiveness would make the app even better. | Well-designed app with a solid concept. Improving user guidance and responsiveness would elevate the overall experience. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
-| **Najmi** | `GA6JIOI5KKODI3S3BKU52QARE6FIU5GSPLEMJOAFI7QLAZDWQMIJ7ORO` | - | - | no | nothing, thats enough | - |
-| **Anubhab Rakshit** | `GDRB3FLKYARUXJF6DHX6MQPY7S5ZCXGTOSDIGSLLCZK3ITZ4CCHRS6DL` | - | - | A bit of ui fixes , rest every thing is fine | It was good and something different | - |
-| **Amitabh Dey** | `GAZOJETEANC2WBUEDUJGZSYEKDRE2XP3FF7S3MCLA2YJUGJ5M3QHEBSN` | - | - | its superb | Damn i literally jus love the app i can use albedo and freighter both plus a reward system really good | - |
-| **Lohit Mishra** | `GDYWYDOBPPM2XFQS2N7OA2XYO66C24OSBDGASSYAU7V3V4UHFIQYWCRL` | - | - | at yield payout its throwing wwhole bunch error of code | error calls are coming in frontend not a good sign it should through a caution msg like u cant do that on this time like that not whole bunch of code wire it up properly | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/63c3c85) |
-| **Aditya Kumar** | `GALK4MID2BKRGDIFYAGRBJ3P2ZDSQJQASWMFAEMP25DPO2O5ISMXVTTB` | - | - | NA. | I just tried it and it felt smooth from my side. | - |
-| **Souvik Mandal** | `GDFKLTB5WKKDDJ2NRU2V5OG476HYEGWT4UFV7BID7BNGWZGRZYL3LL6Z` | - | - | I will recommend a card showing the balance in the wallet on clicking on the wallet address. | Felt awesome. I like the onboarding experience and walkthrough guide. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
-| **Pritam Pal** | `GA4SXARZZ4RPF6N7VOAH3B5OKMFAP3FGY6M6TO3DZJL4TMU2KOVBHCIY` | - | - | NA | Just love the idea and its unique. | - |
+| Full Name | Wallet Address | Feature it's lacking | Specific feedback or suggestion | Github commit link |
+| --- | --- | --- | --- | --- |
+| **Saunak Basak** | `GAKJ6VMQSJQ7S55YNQUSBVETOTANGE3NTG4CHTW3IPOEAT7SXG6UZEWB` | NA | I liked it's UI its awesome. | - |
+| **Rupam Ghosh** | `GBV4FZVZKT26JNLAIMGSNUDDREZLP4ESPOMDA4X6LGBTLUP5XAP73TXI` | Work more on UI | Overall experience is good | - |
+| **Sadiya Mulani** | `GADSVJJYMZTCIDB4NVGXKKPNMNGAZRFXIV5534U7QK6R4IYNSWMZDA65` | Adding better loading states, clearer user guidance, and improved mobile responsiveness would make the app even better. | Well-designed app with a solid concept. Improving user guidance and responsiveness would elevate the overall experience. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
+| **Najmi** | `GA6JIOI5KKODI3S3BKU52QARE6FIU5GSPLEMJOAFI7QLAZDWQMIJ7ORO` | no | nothing, thats enough | - |
+| **Anubhab Rakshit** | `GDRB3FLKYARUXJF6DHX6MQPY7S5ZCXGTOSDIGSLLCZK3ITZ4CCHRS6DL` | A bit of ui fixes , rest every thing is fine | It was good and something different | - |
+| **Amitabh Dey** | `GAZOJETEANC2WBUEDUJGZSYEKDRE2XP3FF7S3MCLA2YJUGJ5M3QHEBSN` | its superb | Damn i literally jus love the app i can use albedo and freighter both plus a reward system really good | - |
+| **Lohit Mishra** | `GDYWYDOBPPM2XFQS2N7OA2XYO66C24OSBDGASSYAU7V3V4UHFIQYWCRL` | at yield payout its throwing wwhole bunch error of code | error calls are coming in frontend not a good sign it should through a caution msg like u cant do that on this time like that not whole bunch of code wire it up properly | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/63c3c85) |
+| **Aditya Kumar** | `GALK4MID2BKRGDIFYAGRBJ3P2ZDSQJQASWMFAEMP25DPO2O5ISMXVTTB` | NA. | I just tried it and it felt smooth from my side. | - |
+| **Souvik Mandal** | `GDFKLTB5WKKDDJ2NRU2V5OG476HYEGWT4UFV7BID7BNGWZGRZYL3LL6Z` | I will recommend a card showing the balance in the wallet on clicking on the wallet address. | Felt awesome. I like the onboarding experience and walkthrough guide. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
+| **Pritam Pal** | `GA4SXARZZ4RPF6N7VOAH3B5OKMFAP3FGY6M6TO3DZJL4TMU2KOVBHCIY` | NA | Just love the idea and its unique. | - |
