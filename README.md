@@ -70,3 +70,224 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Aditya Kumar** | `GALK4MID2BKRGDIFYAGRBJ3P2ZDSQJQASWMFAEMP25DPO2O5ISMXVTTB` | NA. | I just tried it and it felt smooth from my side. | - |
 | **Souvik Mandal** | `GDFKLTB5WKKDDJ2NRU2V5OG476HYEGWT4UFV7BID7BNGWZGRZYL3LL6Z` | I will recommend a card showing the balance in the wallet on clicking on the wallet address. | Felt awesome. I like the onboarding experience and walkthrough guide. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
 | **Pritam Pal** | `GA4SXARZZ4RPF6N7VOAH3B5OKMFAP3FGY6M6TO3DZJL4TMU2KOVBHCIY` | NA | Just love the idea and its unique. | - |
+
+---
+
+## 📸 Screenshots
+
+| **Landing & Onboarding** | **Portfolio Dashboard** |
+| :---: | :---: |
+| ![Landing Page](assets/web/landing.png) | ![Dashboard](assets/web/dashboard.png) |
+
+| **Deposit Vault** | **Withdrawal Vault** |
+| :---: | :---: |
+| ![Deposit Form](assets/web/deposit.png) | ![Withdraw Form](assets/web/withdraw.png) |
+
+| **Proof of Reserves** | **Transaction History** |
+| :---: | :---: |
+| ![Reserves Page](assets/web/reserves.png) | ![History Page](assets/web/history.png) |
+
+### 📱 Mobile Views
+
+| **Landing Page** | **Portfolio Dashboard** |
+| :---: | :---: |
+| ![Mobile Landing](assets/mobile/mobile-landing.png) | ![Mobile Dashboard](assets/mobile/mobile-dashboard.png) |
+
+---
+
+## 📊 Technical Deep Dive
+
+### Core Technology Stack
+| Technology | Role in Architecture | Key Feature / Benefit |
+| :--- | :--- | :--- |
+| **Next.js 16 (App Router)** | Frontend & Serverless Framework | Fast Server-side rendering (SSR) and dynamic API route handlers. |
+| **TailwindCSS** | Design System & Styling | Modern, high-performance, and responsive design components. |
+| **TypeScript** | Strict Typings | Prevents compile-time and runtime failures across application states. |
+| **Upstash Redis** | High-Speed Cache & Registry | Fast read-write operations for historical charts and Proof of Reserves logs, replacing database-heavy queries. |
+
+### Error Handling & Reliability Strategies
+| Error Type | Mitigation Strategy | Realized Benefit |
+| :--- | :--- | :--- |
+| **Wallet Transaction Rejections** | Custom catch handlers in Freighter sign flows to offer graceful UI warning alerts instead of silent page crashes. | Smooth user experiences during contract interactions. |
+| **API Network Failures** | Dynamic mock fallback states in `/api/reserves` and history routing. | The app remains fully functional and readable even if rate limits occur. |
+| **Stellar Network Timeout** | `setTimeout(30)` configured on transaction builders before submission. | Ensures transactions do not hang indefinitely in queue. |
+
+### Blockchain & Smart Contract Details
+| Smart Contract | Contract ID | Verification Link (Stellar.Expert) |
+| :--- | :--- | :--- |
+| **FRAG Token** | `CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV) |
+| **Treasury Pool** | `CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW) |
+| **Yield Distributor** | `CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS) |
+
+---
+
+## 📁 File Architecture
+
+```text
+fragmentfi-stellar/
+├── .github/workflows/          # CI/CD Workflows (Lint, Next.js, Soroban Contracts)
+├── app/                        # Next.js App Router Pages
+│   ├── api/                    # Serverless API Endpoints (Deposit, Withdraw, Cron, reserves, history)
+│   ├── dashboard/              # User Portfolio Dashboard Page
+│   ├── deposit/                # Deposit Vault Page
+│   ├── reserves/               # Proof of Reserves Page
+│   ├── history/                # Transaction History Page
+│   ├── layout.tsx              # Main Layout
+│   └── page.tsx                # Landing Page
+├── components/                 # Shared React Components (Charts, Tables, Forms)
+├── contracts/                  # Soroban Smart Contracts (Rust)
+│   ├── frag_token/             # FRAG Token Contract (Soroban Rust)
+│   ├── treasury_pool/          # Treasury Pool Contract (Soroban Rust)
+│   └── yield_distributor/      # Yield Distributor Contract (Soroban Rust)
+├── hooks/                      # Custom Hooks (Freighter integration useWallet)
+├── lib/                        # Shared utility libraries (stellar, Upstash Redis client)
+├── public/                     # Static assets (logo.png, icons)
+├── tests/                      # Playwright E2E Tests
+├── Dockerfile                  # Multi-stage production Dockerfile
+├── docker-compose.yml          # Local Docker Compose setup
+├── E2E_TESTING_GUIDE.md        # E2E manual testing guide
+└── README.md                   # Main Project Documentation
+```
+
+---
+
+## 🌀 Mermaid Diagrams
+
+### User Interaction Workflow
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User
+    participant Browser as Web Browser (Freighter)
+    participant API as Next.js API Routes
+    participant Redis as Upstash Redis
+    participant Soroban as Stellar Soroban Contract
+
+    User->>Browser: Connect Wallet
+    Browser->>User: Request Freighter Approval
+    User->>Browser: Approve
+    Browser->>API: Authenticate & Retrieve Balance
+    API-->>Browser: Session Cookie & User State
+    
+    rect rgb(20, 20, 30)
+        note right of User: Deposit Flow
+        User->>Browser: Enter Deposit Amount (e.g. 100 XLM)
+        Browser->>API: Generate Tx XDR
+        API-->>Browser: Return Unsigned Transaction
+        Browser->>User: Request Sign
+        User->>Browser: Sign with Private Key
+        Browser->>Soroban: Submit Transaction
+        Soroban-->>Browser: Success (Mint FRAG)
+        Browser->>API: Notify Deposit Success
+        API->>Redis: Update Cache & Audit Log
+    end
+```
+
+### System Architecture
+```mermaid
+graph TD
+    User[User / Client browser] -->|Freighter Extension| FE[Next.js App UI]
+    
+    subgraph Frontend App
+        FE -->|Requests| API[Next.js API Handlers]
+        FE -->|Reads / Writes| SC[Soroban Smart Contracts]
+    end
+
+    subgraph Backend Services
+        API -->|Cache Read/Write| Redis[(Upstash Redis Cache)]
+        API -->|State Queries| Node[Stellar Horizon/RPC Node]
+    end
+
+    subgraph Stellar Testnet
+        SC -->|Mint/Burn| FRAG[FRAG Token Contract]
+        SC -->|Locks Collateral| Pool[Treasury Pool Contract]
+        SC -->|Triggers Yield| Yield[Yield Distributor Contract]
+    end
+```
+
+---
+
+## 🧪 Testing Proof & Code Quality
+
+FragmentFi utilizes a strict code quality configuration that is automatically run on every code update.
+
+### Continuous Integration (CI/CD)
+The project includes three separate GitHub Action pipelines:
+1.  **Lint & Type Check (`lint.yml`):** Runs `eslint` and `npx tsc --noEmit` to ensure TypeScript compilation safety.
+2.  **Next.js Build (`nextjs.yml`):** Compiles the Next.js production build securely with optimized output.
+3.  **Soroban Contracts (`contracts.yml`):** Sets up Rust, target `wasm32-unknown-unknown`, and runs `cargo test` in all smart contract packages.
+
+### Playwright E2E Tests
+E2E automated validation scripts verify major user pathways, such as loading the Proof of Reserves metrics and checking API responses.
+
+To run automated E2E tests locally:
+```bash
+npx playwright test
+```
+
+#### E2E Test Execution Proof
+![Playwright E2E Test Results](assets/test-screenshot.png)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+*   Node.js (v20 or higher)
+*   Docker (Optional, for containerized run)
+*   Stellar Freighter wallet extension installed in your browser.
+
+### Run Locally (Development)
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/debansh001/fragmentfi-stellar.git
+    cd fragmentfi-stellar
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Set up Environment Variables:**
+    Create a `.env.local` file in the root directory:
+    ```env
+    UPSTASH_REDIS_REST_URL="your-upstash-redis-url"
+    UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
+    JWT_SECRET="your-jwt-signing-secret"
+    NEXT_PUBLIC_FRAG_CONTRACT_ID="CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV"
+    NEXT_PUBLIC_TREASURY_CONTRACT_ID="CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW"
+    NEXT_PUBLIC_YIELD_CONTRACT_ID="CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS"
+    ```
+4.  **Run Dev Server:**
+    ```bash
+    npm run dev
+    ```
+    Open [http://localhost:3000](http://localhost:3000) to view the application!
+
+### Run with Docker (Production Mode)
+The application comes preconfigured with a multi-stage Docker build that generates a lightweight standalone Next.js server.
+
+1.  **Build and Run with Docker Compose:**
+    ```bash
+    docker-compose up --build -d
+    ```
+2.  **Access the Application:**
+    Navigate to [http://localhost:3000](http://localhost:3000). The container exposes standard production logs.
+
+---
+
+## 🔮 Next Phase & Future Vision
+
+*   **Multi-Asset Treasuries:** Expand the collateral backing from single government yields to diversified baskets of high-grade tokenized corporate bonds and commodities.
+*   **Yield Auto-Compounding Vaults:** Create customized smart vaults that automatically reinvest interest yields back into the treasury pool to compound user assets.
+*   **Decentralized Governance (DAO):** Implement on-chain voting where FRAG token holders can vote on which RWAs are integrated next into the collateral vaults.
+
+---
+
+## ❤️ Acknowledgements & Salutation
+
+Thank you for selecting this idea and giving us the opportunity to work on this exciting project! 
+
+If you like this product and find it valuable, please **star this repository** ⭐. It helps support the development of open-source tokenized finance!
+
+---
+*Created by [debansh001](https://github.com/debansh001).*
