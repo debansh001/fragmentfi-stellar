@@ -1,6 +1,7 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 export type WalletType = 'freighter' | 'albedo';
 
@@ -12,10 +13,17 @@ interface WalletConnectModalProps {
 }
 
 export default function WalletConnectModal({ isOpen, onClose, onConnect, isConnecting }: WalletConnectModalProps) {
-  if (!isOpen) return null;
+  const [mounted, setMounted] = useState(false);
 
-  return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm">
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
+
+  const modalContent = (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm" style={{ pointerEvents: 'auto' }}>
       <div className="w-full max-w-sm rounded-2xl border border-border bg-background p-6 shadow-xl relative animate-in fade-in zoom-in duration-200">
         <button
           onClick={onClose}
@@ -68,4 +76,6 @@ export default function WalletConnectModal({ isOpen, onClose, onConnect, isConne
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }
