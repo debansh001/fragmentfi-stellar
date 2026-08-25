@@ -84,6 +84,14 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Aditya Kumar** | `GALK4MID2BKRGDIFYAGRBJ3P2ZDSQJQASWMFAEMP25DPO2O5ISMXVTTB` | NA. | I just tried it and it felt smooth from my side. | - |
 | **Souvik Mandal** | `GDFKLTB5WKKDDJ2NRU2V5OG476HYEGWT4UFV7BID7BNGWZGRZYL3LL6Z` | I will recommend a card showing the balance in the wallet on clicking on the wallet address. | Felt awesome. I like the onboarding experience and walkthrough guide. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/cffadcc) |
 | **Pritam Pal** | `GA4SXARZZ4RPF6N7VOAH3B5OKMFAP3FGY6M6TO3DZJL4TMU2KOVBHCIY` | NA | Just love the idea and its unique. | - |
+| **Niladri Mahato** | `GB23YPDN4ZLLFHTLKMTRBGEGI37GPGYXHMCORML35PD7SQA5XKKE2PWA` | Getting some error while deposit both USDC and XLM | UI and all the stuffs is good | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/fcf187c) |
+| **Sudhir Majhi** | `GDYF2MPWHTXE63DVLGG3H4JKTCBQ24OZAMGMLBMYY3IEIJLOCVD5CZDU` | Checked the app and I think need to fix the ladning page more things are need to be added there. | Overall app idea is good | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/4039e5c) |
+| **Arpan Dutta** | `GDX4565AJ4DBGP3HGDIV7F6QJ3IPOVDLG3BOXTHS5ITWKJMEWND3Y7HK` | No everything is working fine | all good the UI is very nice | - |
+| **Aman Ghoel** | `GDCP2LXKUNBHFV4FPG4SDRIIQ5WVJ2OWH7WJWBHOK5TCNXKSDI74O32G` | While claiming yield I encountered an eror please check it once. | Averll app is smooth and user friendly no issues with that. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/e3225e7) |
+| **Shanto Pramanik** | `GCSHXA2QD4RS35O2D7OCIRUT6ONNHDWN42YAFTQUT6NWGKGCUGBASQNQ` | no | Product Idea and UI is good for this app | - |
+| **Rajat Dutta** | `GAJUWETQPUT4RH6BHWDQOMC6EPTMMW4Q3IW46KSMCZLN7Y25NCLQBOV3` | Features are working | Very smooth onboarding I liked this not much hassle and trasnectio nUI and components are great again. | - |
+| **Ritesh Maity** | `GBA6F4HQIJ6UY7WXUH2KRMHYIVX57MRFWZP7QS7EB267MYCKJARMH6UP` | na | investing a safely with this product with a petty amount is abosolutely nice | - |
+| **Ayushi Nandi** | `GAREG55YYVOTXCA6MK3RKMFNJ2VPNIET3VIEFFJTCQAVFUHFI6CDVGPN` | Top tab the the balance is not displaying properly and also enhance that part a bit like the wallet can be copied. | Everything is working fine. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/7c58220) |
 
 ---
 
