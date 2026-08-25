@@ -85,6 +85,9 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
         throw new Error(data.error || `Failed to record deposit. Server response: ${JSON.stringify(data)}`);
       }
       
+      // Notify other components (like ConnectWalletButton) to refresh their balance
+      window.dispatchEvent(new Event('balance_update'));
+
       // 4. Success callback
       onSuccess(finalFrag, data.newBalance, finalTxHash);
 
