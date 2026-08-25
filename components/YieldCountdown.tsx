@@ -101,7 +101,7 @@ export default function YieldCountdown({ estimatedAmount }: YieldCountdownProps)
       } else if (errMsg.includes("op_underfunded")) {
         friendlyError = "Insufficient XLM for fees.";
       } else {
-        friendlyError = `Failed: Please try again later.`; 
+        friendlyError = `Failed: ${errMsg}`; 
       }
       
       setActionStatus(`Error: ${friendlyError}`);
