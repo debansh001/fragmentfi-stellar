@@ -33,10 +33,13 @@ export function useWallet() {
 
       if (selectedWallet === 'freighter') {
         const accessRes: any = await requestAccess();
+        if (accessRes?.error) {
+          throw new Error(accessRes.error);
+        }
         pubKey = typeof accessRes === 'string' ? accessRes : accessRes?.address ?? null;
         
         if (!pubKey) {
-          throw new Error('Could not get wallet address. Please unlock Freighter and try again.');
+          throw new Error('Could not get wallet address. Please ensure Freighter is installed and unlocked.');
         }
       } else if (selectedWallet === 'albedo') {
         const res = await albedo.publicKey({});
@@ -62,7 +65,8 @@ export function useWallet() {
         localStorage.setItem('fragmentfi_wallet_type', selectedWallet);
         window.location.replace('/dashboard');
       } else {
-        throw new Error('Wallet verification failed.');
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || 'Wallet verification failed on the server.');
       }
     } catch (e: any) {
       if (e?.message?.toLowerCase().includes('declined') || e?.message?.toLowerCase().includes('rejected') || e?.message?.toLowerCase().includes('closed')) {
@@ -95,7 +99,11 @@ export function useWallet() {
       const res = await albedo.tx({ xdr, network: 'testnet' });
       return { signedTxXdr: res.signed_envelope_xdr };
     } else {
-      return freighterSignTransaction(xdr, opts);
+      const res = await freighterSignTransaction(xdr, opts) as any;
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      return { signedTxXdr: res.signedTxXdr };
     }
   }, [walletType]);
 

@@ -44,6 +44,17 @@ function decodeErrorResult(errorResult: any): string {
         // ignore parse errors, fall through
       }
     }
+    // Check for common transaction rejection reasons in the raw string
+    if (raw.includes('txBadAuth')) {
+      return 'Transaction authentication failed. You may have rejected the signature, or your wallet sequence is out of sync.';
+    }
+    if (raw.includes('txBadSeq')) {
+      return 'Transaction sequence number mismatch. Please try again.';
+    }
+    if (raw.includes('txInsufficientBalance')) {
+      return 'Insufficient XLM balance to pay for transaction fees.';
+    }
+
     return raw;
   } catch {
     return 'Contract invocation failed. Check your XLM balance and try again.';
