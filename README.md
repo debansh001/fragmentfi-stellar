@@ -68,7 +68,7 @@ By fractionalizing asset ownership into liquid, yield-bearing **FRAG tokens**, w
 
 We value your feedback! Feel free to share your thoughts, rate the experience, and report bugs:
 *   📝 **Submit Feedback (Google Form):** [Google Form Link](https://forms.gle/NiVTmRWZgQGyu4nB9)
-*   📊 **View Live Responses (Google Sheets):** [Google Sheets Link](https://docs.google.com/spreadsheets/d/1tEJAdjIFNnM7RGtxMDo_xqP0kAqZ6pTb7rMNQmZ7fMo/edit?usp=sharing)
+*   📊 **View Live Responses (Google Sheets):** [Google Sheets Link](https://docs.google.com/spreadsheets/d/12ABdXFaiQGYXMwTV74UJRCZkWvTOdVarAW-r5xTDxGk/edit?usp=sharing)
 
 Below is a detailed log of the latest user reviews, including the commit links where the feedback issues are addressed:
 
