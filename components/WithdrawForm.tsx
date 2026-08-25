@@ -99,12 +99,12 @@ export default function WithdrawForm({ maxBalance, onSuccess }: WithdrawFormProp
         })
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || 'Failed to record withdrawal on server');
-      }
-
       const data = await res.json();
+
+      if (!res.ok) {
+        console.error("Withdraw API failed with status:", res.status, "Data:", data);
+        throw new Error(data.error || `Failed to record withdrawal. Server response: ${JSON.stringify(data)}`);
+      }
       
       // 4. Success callback
       onSuccess(amountFrag, data.newBalance, finalTxHash);

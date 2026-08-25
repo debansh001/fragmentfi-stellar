@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const contactMethods = [
   { icon: "🐙", title: "GitHub", desc: "Browse the source code, open issues, or submit pull requests.", cta: "View Repository", href: "https://github.com/debansh001/fragmentfi-stellar", color: "border-gray-500/30 hover:border-gray-400/60 bg-gray-500/5", badge: "bg-gray-500/15 text-gray-400" },
   { icon: "🐛", title: "Bug Reports", desc: "Found an issue? Open a detailed GitHub Issue with steps to reproduce.", cta: "Open an Issue", href: "https://github.com/debansh001/fragmentfi-stellar/issues", color: "border-red-500/30 hover:border-red-500/60 bg-red-500/5", badge: "bg-red-500/15 text-red-400" },
-  { icon: "💬", title: "Email", desc: "For collaboration, partnerships, or private security disclosures.", cta: "souvikinnovates@gmail.com", href: "mailto:souvikinnovates@gmail.com", color: "border-blue-500/30 hover:border-blue-500/60 bg-blue-500/5", badge: "bg-blue-500/15 text-blue-400" },
+  { icon: "💬", title: "Email", desc: "For collaboration, partnerships, or private security disclosures.", cta: "debanshtiwarii21@gmail.com", href: "mailto:debanshtiwarii21@gmail.com", color: "border-blue-500/30 hover:border-blue-500/60 bg-blue-500/5", badge: "bg-blue-500/15 text-blue-400" },
   { icon: "🌐", title: "Stellar Network", desc: "View the live contracts and transactions on the Stellar Testnet explorer.", cta: "Open Explorer", href: "https://stellar.expert/explorer/testnet", color: "border-emerald-500/30 hover:border-emerald-500/60 bg-emerald-500/5", badge: "bg-emerald-500/15 text-emerald-400" },
 ];
 

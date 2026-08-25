@@ -81,7 +81,8 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to record deposit on server');
+        console.error("Deposit API failed with status:", res.status, "Data:", data);
+        throw new Error(data.error || `Failed to record deposit. Server response: ${JSON.stringify(data)}`);
       }
       
       // 4. Success callback
