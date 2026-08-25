@@ -21,8 +21,7 @@ export async function GET() {
     const token = cookieStore.get('fragmentfi_session')?.value;
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { payload } = await jwtVerify(token, JWT_SECRET);
-    const address = payload.address as string;
+    let payload; try { const verified = await jwtVerify(token, JWT_SECRET); payload = verified.payload; } catch { return NextResponse.json({ error: 'Invalid or expired session' }, { status: 401 }); } const address = payload.address as string;
     if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
     // Ensure user record exists

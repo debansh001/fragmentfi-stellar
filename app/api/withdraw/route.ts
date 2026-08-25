@@ -14,7 +14,13 @@ export async function POST(req: Request) {
     const token = cookieStore.get('fragmentfi_session')?.value;
     if (!token) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-    const { payload } = await jwtVerify(token, JWT_SECRET);
+    let payload;
+    try {
+      const verified = await jwtVerify(token, JWT_SECRET);
+      payload = verified.payload;
+    } catch {
+      return NextResponse.json({ error: 'Invalid or expired session' }, { status: 401 });
+    }
     const address = payload.address as string;
     if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
@@ -42,10 +48,9 @@ export async function POST(req: Request) {
     }
 
     // If the network is extremely congested and still hasn't updated the RPC state,
-    // fallback to optimistic calculation to provide a smooth UX.
-    if (trueOnChainBalance === oldBalance) {
-      trueOnChainBalance = Math.max(0, oldBalance - fragAmount);
-    }
+    // we strictly use the confirmed on-chain balance. We DO NOT trust the client's fragAmount
+    // to deduct from the balance, as they could forge fake withdrawals.
+    // trueOnChainBalance remains the last confirmed balance.
 
     const portfolioKey = KEYS.portfolio(address);
     const newPortfolio = {
