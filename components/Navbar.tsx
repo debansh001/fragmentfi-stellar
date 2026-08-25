@@ -19,6 +19,12 @@ export default function Navbar() {
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
+  // Check if current page is a public/marketing page
+  const isPublicPage = ["/", "/how-it-works", "/contact", "/docs"].includes(pathname) ||
+    pathname?.startsWith("/docs") ||
+    pathname?.startsWith("/how-it-works") ||
+    pathname?.startsWith("/contact");
+
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center px-4 md:px-8 max-w-7xl mx-auto">
@@ -32,7 +38,7 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-1 text-sm font-medium flex-1">
-          {navLinks.map((link) => {
+          {isPublicPage && navLinks.map((link) => {
             const isActive = pathname === link.href || pathname?.startsWith(link.href + "/");
             return (
               <Link
@@ -79,7 +85,7 @@ export default function Navbar() {
       {isMobileMenuOpen && (
         <div className="md:hidden border-t border-border p-4 bg-background">
           <div className="flex flex-col space-y-2">
-            {navLinks.map((link) => (
+            {isPublicPage && navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}

@@ -280,7 +280,7 @@ export default function LandingPage() {
               <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
               <a href="https://github.com/debansh001/fragmentfi-stellar" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
             </nav>
-            <p className="text-xs text-muted-foreground">© 2025 FragmentFi. Testnet only.</p>
+            <p className="text-xs text-muted-foreground">© 2026 FragmentFi. Testnet only.</p>
           </div>
         </div>
       </footer>
