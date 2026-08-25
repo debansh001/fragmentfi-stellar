@@ -78,11 +78,11 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
         })
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to record deposit on server');
-      }
-
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Failed to record deposit on server');
+      }
       
       // 4. Success callback
       onSuccess(finalFrag, data.newBalance, finalTxHash);

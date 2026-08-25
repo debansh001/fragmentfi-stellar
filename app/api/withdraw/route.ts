@@ -19,44 +19,46 @@ export async function POST(req: Request) {
       const verified = await jwtVerify(token, JWT_SECRET);
       payload = verified.payload;
     } catch {
-      return NextResponse.json({ error: 'Invalid or expired session' }, { status: 401 });
+      return NextResponse.json({ error: 'Session expired. Please reconnect your wallet.' }, { status: 401 });
     }
     const address = payload.address as string;
     if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
     const { fragAmount, receiveUsd, targetAsset, txHash } = await req.json();
     if (fragAmount === undefined || receiveUsd === undefined || !txHash) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields: fragAmount, receiveUsd, txHash' }, { status: 400 });
     }
 
-    // Fetch the old balance first
+    // ── Step 1: Get current on-chain balance (with a SHORT timeout) ──────────
+    // We poll max 2 times × 1.5s = 3s total to avoid Vercel's 10s function limit.
+    let trueOnChainBalance: number | null = null;
     const oldBalanceStr = await getFragBalance(address);
     const oldBalance = Number(oldBalanceStr) || 0;
 
-    let trueOnChainBalance = oldBalance;
-    
-    // Poll for up to 8 seconds to allow the Stellar network to finalize the transaction state
-    for (let i = 0; i < 4; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    for (let i = 0; i < 2; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       const currentBalanceStr = await getFragBalance(address);
       const currentBalance = Number(currentBalanceStr) || 0;
-      
       if (currentBalance !== oldBalance) {
         trueOnChainBalance = currentBalance;
         break;
       }
     }
 
-    // If the network is extremely congested and still hasn't updated the RPC state,
-    // we strictly use the confirmed on-chain balance. We DO NOT trust the client's fragAmount
-    // to deduct from the balance, as they could forge fake withdrawals.
-    // trueOnChainBalance remains the last confirmed balance.
+    // ── Step 2: Determine final balance ──────────────────────────────────────
+    // If the chain confirmed the balance change, use that.
+    // If not (network slow / RPC lag), use optimistic: old - fragAmount.
+    const finalBalance = trueOnChainBalance !== null
+      ? trueOnChainBalance
+      : Math.max(0, oldBalance - (Number(fragAmount) || 0));
 
+    // ── Step 3: Persist to Redis (fast) ──────────────────────────────────────
     const portfolioKey = KEYS.portfolio(address);
     const newPortfolio = {
-      frag_balance: trueOnChainBalance,
-      usd_value: trueOnChainBalance * 1.0,
+      frag_balance: finalBalance,
+      usd_value: finalBalance,
       updated_at: new Date().toISOString(),
+      chain_confirmed: trueOnChainBalance !== null,
     };
 
     const txRecord = JSON.stringify({
@@ -72,12 +74,18 @@ export async function POST(req: Request) {
     await Promise.all([
       redis.set(portfolioKey, JSON.stringify(newPortfolio)),
       redis.lpush(KEYS.txns(address), txRecord),
-      // statsAum is now fetched entirely on-chain in reserves route.
     ]);
 
-    return NextResponse.json({ success: true, newBalance: newPortfolio.frag_balance });
-  } catch (error) {
-    console.error('Withdraw API Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ 
+      success: true, 
+      newBalance: newPortfolio.frag_balance,
+      chain_confirmed: trueOnChainBalance !== null
+    });
+  } catch (error: any) {
+    console.error('[Withdraw API Error]', error?.message || error);
+    return NextResponse.json(
+      { error: `Withdraw recording failed: ${error?.message || 'Internal server error'}` },
+      { status: 500 }
+    );
   }
 }

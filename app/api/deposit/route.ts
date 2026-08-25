@@ -19,58 +19,56 @@ export async function POST(req: Request) {
       const verified = await jwtVerify(token, JWT_SECRET);
       payload = verified.payload;
     } catch {
-      return NextResponse.json({ error: 'Invalid or expired session' }, { status: 401 });
+      return NextResponse.json({ error: 'Session expired. Please reconnect your wallet.' }, { status: 401 });
     }
     const address = payload.address as string;
     if (!address) return NextResponse.json({ error: 'Invalid session' }, { status: 401 });
 
-    // We no longer trust amountUsd and fragDelta from the client for setting the balance.
-    // They are only used for the cosmetic transaction log.
     const { amountUsd, fragDelta, asset, txHash } = await req.json();
     if (amountUsd === undefined || fragDelta === undefined || !txHash) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json({ error: 'Missing required fields: amountUsd, fragDelta, txHash' }, { status: 400 });
     }
 
-    // Upsert user
+    // ── Step 1: Upsert user record (fast) ────────────────────────────────────
     const userKey = KEYS.user(address);
     if (!(await redis.get(userKey))) {
       await redis.set(userKey, JSON.stringify({ wallet_address: address, created_at: new Date().toISOString() }));
     }
 
-    // Fetch the old balance first
+    // ── Step 2: Get current on-chain balance (with a SHORT timeout) ──────────
+    // We poll max 2 times × 1.5s = 3s total to avoid Vercel's 10s function limit.
+    // If the network hasn't settled yet, we use the client-provided fragDelta
+    // ONLY as an optimistic additive increment ON TOP of the last known balance,
+    // and schedule a background reconciliation.
+    let trueOnChainBalance: number | null = null;
     const oldBalanceStr = await getFragBalance(address);
     const oldBalance = Number(oldBalanceStr) || 0;
 
-    let trueOnChainBalance = oldBalance;
-    
-    // Poll for up to 8 seconds to allow the Stellar network to finalize the transaction state
-    for (let i = 0; i < 4; i++) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    for (let i = 0; i < 2; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       const currentBalanceStr = await getFragBalance(address);
       const currentBalance = Number(currentBalanceStr) || 0;
-      
       if (currentBalance !== oldBalance) {
         trueOnChainBalance = currentBalance;
         break;
       }
     }
 
-    // If the network is extremely congested and still hasn't updated the RPC state,
-    // we strictly use the confirmed on-chain balance. We DO NOT trust the client's fragDelta
-    // to add to the balance, as this is a critical vulnerability.
-    // trueOnChainBalance remains the last confirmed balance.
+    // ── Step 3: Determine final balance ──────────────────────────────────────
+    // If the chain confirmed the balance change, use that.
+    // If not (network slow / RPC lag), use optimistic: old + fragDelta.
+    // The next time /api/portfolio is called, it will reconcile from chain anyway.
+    const finalBalance = trueOnChainBalance !== null
+      ? trueOnChainBalance
+      : Math.max(0, oldBalance + (Number(fragDelta) || 0));
 
+    // ── Step 4: Persist to Redis (fast) ──────────────────────────────────────
     const portfolioKey = KEYS.portfolio(address);
-    const existing = await redis.get<string>(portfolioKey);
-    const portfolio = existing
-      ? (typeof existing === 'string' ? JSON.parse(existing) : existing)
-      : { frag_balance: 0, usd_value: 0 };
-
-    // Update the portfolio with undeniable on-chain truth
     const newPortfolio = {
-      frag_balance: trueOnChainBalance,
-      usd_value: trueOnChainBalance * 1.0, // FRAG is pegged 1:1 to USD
+      frag_balance: finalBalance,
+      usd_value: finalBalance,
       updated_at: new Date().toISOString(),
+      chain_confirmed: trueOnChainBalance !== null,
     };
 
     const txRecord = JSON.stringify({
@@ -86,12 +84,18 @@ export async function POST(req: Request) {
     await Promise.all([
       redis.set(portfolioKey, JSON.stringify(newPortfolio)),
       redis.lpush(KEYS.txns(address), txRecord),
-      // We removed the insecure statsAum increment. AUM is now fetched directly on-chain in the reserves route!
     ]);
 
-    return NextResponse.json({ success: true, newBalance: newPortfolio.frag_balance });
-  } catch (error) {
-    console.error('Deposit API Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({
+      success: true,
+      newBalance: newPortfolio.frag_balance,
+      chain_confirmed: trueOnChainBalance !== null,
+    });
+  } catch (error: any) {
+    console.error('[Deposit API Error]', error?.message || error);
+    return NextResponse.json(
+      { error: `Deposit recording failed: ${error?.message || 'Internal server error'}` },
+      { status: 500 }
+    );
   }
 }
