@@ -149,7 +149,7 @@ Below is a detailed log of the latest user reviews, including the commit links w
 
 The complete documentation for FragmentFi, including Setup, Usage, Architecture, Smart Contracts, and our User Feedback Journey, has been moved to its own dedicated standalone website.
 
-👉 **[View Full Documentation Here](https://fragmentfi-docs.vercel.app)** *(Note: Replace with your final Vercel deployment URL)*
+👉 **[View Full Documentation Here](https://fragmentfi-docs-site.vercel.app)**
 
 ---
 

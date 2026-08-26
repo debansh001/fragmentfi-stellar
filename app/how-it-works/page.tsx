@@ -145,7 +145,7 @@ export default function HowItWorksPage() {
               Launch App →
             </Link>
             <Link
-              href="https://fragmentfi-docs.vercel.app" target="_blank" rel="noopener noreferrer"
+              href="https://fragmentfi-docs-site.vercel.app" target="_blank" rel="noopener noreferrer"
               className="rounded-full px-8 py-3 text-sm font-semibold text-foreground border border-border hover:bg-muted transition-all"
             >
               Read the Docs
