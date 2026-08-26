@@ -7,7 +7,7 @@ const JWT_SECRET = new TextEncoder().encode(
 );
 
 // reserves is a public transparency page, it should not be protected
-const PROTECTED = ['/dashboard', '/deposit', '/withdraw', '/history'];
+const PROTECTED = ['/dashboard', '/deposit', '/withdraw', '/history', '/profile'];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -38,5 +38,6 @@ export const config = {
     '/deposit/:path*',
     '/withdraw/:path*',
     '/history/:path*',
+    '/profile/:path*',
   ],
 };
