@@ -145,30 +145,27 @@ Below is a detailed log of the latest user reviews, including the commit links w
 
 ## 📁 File Architecture
 
+## 📚 Official Documentation
+
+The complete documentation for FragmentFi, including Setup, Usage, Architecture, Smart Contracts, and our User Feedback Journey, has been moved to its own dedicated standalone website.
+
+👉 **[View Full Documentation Here](https://fragmentfi-docs.vercel.app)** *(Note: Replace with your final Vercel deployment URL)*
+
+---
+
+## 🏗 Directory Structure
+
 ```text
 fragmentfi-stellar/
-├── .github/workflows/          # CI/CD Workflows (Lint, Next.js, Soroban Contracts)
-├── app/                        # Next.js App Router Pages
-│   ├── api/                    # Serverless API Endpoints (Deposit, Withdraw, Cron, reserves, history)
-│   ├── dashboard/              # User Portfolio Dashboard Page
-│   ├── deposit/                # Deposit Vault Page
-│   ├── reserves/               # Proof of Reserves Page
-│   ├── history/                # Transaction History Page
-│   ├── layout.tsx              # Main Layout
-│   └── page.tsx                # Landing Page
-├── components/                 # Shared React Components (Charts, Tables, Forms)
+├── .github/workflows/          # CI/CD Workflows
+├── app/                        # Main Web3 App (Next.js)
+├── components/                 # Shared React Components
 ├── contracts/                  # Soroban Smart Contracts (Rust)
-│   ├── frag_token/             # FRAG Token Contract (Soroban Rust)
-│   ├── treasury_pool/          # Treasury Pool Contract (Soroban Rust)
-│   └── yield_distributor/      # Yield Distributor Contract (Soroban Rust)
-├── hooks/                      # Custom Hooks (Freighter integration useWallet)
-├── lib/                        # Shared utility libraries (stellar, Upstash Redis client)
-├── public/                     # Static assets (logo.png, icons)
-├── tests/                      # Playwright E2E Tests
-├── Dockerfile                  # Multi-stage production Dockerfile
-├── docker-compose.yml          # Local Docker Compose setup
-├── E2E_TESTING_GUIDE.md        # E2E manual testing guide
-└── README.md                   # Main Project Documentation
+├── docs-site/                  # Dedicated Documentation Website (Standalone Next.js App)
+├── hooks/                      # Custom Hooks (Freighter integration)
+├── lib/                        # Shared libraries
+├── public/                     # Static assets
+└── tests/                      # Playwright E2E Tests
 ```
 
 ---

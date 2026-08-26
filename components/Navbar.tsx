@@ -8,7 +8,6 @@ import Image from "next/image";
 
 const navLinks = [
   { name: "How It Works", href: "/how-it-works" },
-  { name: "Docs", href: "/docs" },
   { name: "Reserves", href: "/reserves" },
   { name: "Contact", href: "/contact" },
 ];
@@ -20,8 +19,7 @@ export default function Navbar() {
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   // Check if current page is a public/marketing page
-  const isPublicPage = ["/", "/how-it-works", "/contact", "/docs"].includes(pathname) ||
-    pathname?.startsWith("/docs") ||
+  const isPublicPage = ["/", "/how-it-works", "/contact"].includes(pathname) ||
     pathname?.startsWith("/how-it-works") ||
     pathname?.startsWith("/contact");
 
