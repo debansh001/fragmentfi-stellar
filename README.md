@@ -92,6 +92,14 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Rajat Dutta** | `GAJUWETQPUT4RH6BHWDQOMC6EPTMMW4Q3IW46KSMCZLN7Y25NCLQBOV3` | Features are working | Very smooth onboarding I liked this not much hassle and trasnectio nUI and components are great again. | - |
 | **Ritesh Maity** | `GBA6F4HQIJ6UY7WXUH2KRMHYIVX57MRFWZP7QS7EB267MYCKJARMH6UP` | na | investing a safely with this product with a petty amount is abosolutely nice | - |
 | **Ayushi Nandi** | `GAREG55YYVOTXCA6MK3RKMFNJ2VPNIET3VIEFFJTCQAVFUHFI6CDVGPN` | Top tab the the balance is not displaying properly and also enhance that part a bit like the wallet can be copied. | Everything is working fine. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/7c58220) |
+| **Soumi Das** | `GDAUYKURO274AJDEBF5JZDUP5RDBQM6PGUSRVZ7LVSPU25HMBRUQRPY6` | A profile tab is expected I think it should be there | All the featuers are working but couldn't understand the reserve thing | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/3d33b8e) |
+| **Olivia Ghosal** | `GC5TRX7OLZP57WKSLIACKAXO7YGHR4NI4BSS3SR3NQDMJL3JDSF7WZJ4` | I think if you could provide a dark light theme button it would be better. | The begginers guide for this website is very nice I like that. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/38b1aec) |
+| **Utsab Basak** | `GBYIJRF5CW4QG3XBETDBCNS3K7R65CEDNB4J3QBWKEIPVWMU6MKNIPW6` | NA | Product is nice no issues | - |
+| **Krishna Mondal** | `GDDLLEWZE3IZKVHOOPZ2ZVQMJ2HOYFGCHEKMJA3PXY2J7TPK5GDDDQYL` | no | Unique way of investing cool product | - |
+| **Asutosh Sharma** | `GDBXA3NAGRLTYP7NI6EIS4QT273UUWHZYN4KCO7JT2E5VYYBSG2CQFYJ` | I didn't encounter any error | Plan is nice execution is also nice so the idea | - |
+| **Asmaan Verma** | `GDNWLN3JLOCPWWL3WNXKN5PNPHDCJVJR2337VCK3NFK3HCXIDLU2QERC` | I got no issues | Best way to invest and have safe returns | - |
+| **Rashmi Sharma** | `GB3G5ZU7BL3PXWZIOJIETBF6FROFEMZVJJVRUUBTZVNRMLJAQPNPLK5Q` | No scope found but a white backgorund is recommended | UI is very nice | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/38b1aec) |
+| **Jogesh Mandal** | `GD37TTSTX22Y24CAKWO45IKKHEMDYVEK7MEE7QC6C4O6VAIDXCEK4VL4` | no such thing need but a dark and white mode toggle would be good | easy onboarding and payments | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/38b1aec) |
 
 ---
 
