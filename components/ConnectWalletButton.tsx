@@ -42,6 +42,7 @@ export default function ConnectWalletButton() {
     const handleBalanceUpdate = () => fetchBalance();
     window.addEventListener('balance_update', handleBalanceUpdate);
     return () => window.removeEventListener('balance_update', handleBalanceUpdate);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
 
   const handleCopy = () => {
