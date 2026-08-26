@@ -31,10 +31,10 @@ export default function FeedbackJourneyPage() {
         <div className="bg-card border border-border rounded-lg p-6 space-y-3">
           <h3 className="text-lg font-bold text-primary">2. Graceful Error Handling for Smart Contracts</h3>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            <strong>The Problem:</strong> Users reported a "whole bunch of error code" when trying to claim yield. This occurred when the Yield Distributor smart contract ran out of its XLM funding pool, causing the Stellar network to throw raw XDR HostErrors.
+            <strong>The Problem:</strong> Users reported a &quot;whole bunch of error code&quot; when trying to claim yield. This occurred when the Yield Distributor smart contract ran out of its XLM funding pool, causing the Stellar network to throw raw XDR HostErrors.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            <strong>The Fix:</strong> We wrote a custom XDR error decoder (`decodeErrorResult`) to catch these contract panics and translate them into human-readable UI alerts (e.g., "Insufficient XLM balance to pay for transaction fees"). We also manually topped up the Yield Distributor on the testnet with 9,000 XLM to resume payouts.
+            <strong>The Fix:</strong> We wrote a custom XDR error decoder (`decodeErrorResult`) to catch these contract panics and translate them into human-readable UI alerts (e.g., &quot;Insufficient XLM balance to pay for transaction fees&quot;). We also manually topped up the Yield Distributor on the testnet with 9,000 XLM to resume payouts.
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export default function FeedbackJourneyPage() {
             <strong>The Problem:</strong> If a user canceled a transaction in the Freighter wallet popup, the app would sometimes submit the unsigned transaction to the network anyway, resulting in an ugly `txBadAuth` JSON error on the frontend.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            <strong>The Fix:</strong> We improved the `useWallet` hook to explicitly check for Freighter rejection errors and gracefully abort the submission process, displaying a simple "Transaction cancelled in wallet" toast instead.
+            <strong>The Fix:</strong> We improved the `useWallet` hook to explicitly check for Freighter rejection errors and gracefully abort the submission process, displaying a simple &quot;Transaction cancelled in wallet&quot; toast instead.
           </p>
         </div>
 
