@@ -121,7 +121,7 @@ export default function ContactPage() {
             <Link href="/" className="rounded-full bg-primary px-8 py-3 text-sm font-semibold text-white hover:bg-primary/90 transition-colors">
               Launch App
             </Link>
-            <Link href="/docs" className="rounded-full px-8 py-3 text-sm font-semibold text-foreground border border-border hover:bg-muted transition-colors">
+            <Link href="https://fragmentfi-docs.vercel.app" target="_blank" rel="noopener noreferrer" className="rounded-full px-8 py-3 text-sm font-semibold text-foreground border border-border hover:bg-muted transition-colors">
               Read Docs
             </Link>
           </div>

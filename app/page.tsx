@@ -256,7 +256,7 @@ export default function LandingPage() {
               {address ? 'Go to Dashboard →' : 'Launch App'}
             </button>
             <Link
-              href="/docs"
+              href="https://fragmentfi-docs.vercel.app" target="_blank" rel="noopener noreferrer"
               className="rounded-full px-8 py-4 text-base font-semibold text-foreground border border-border hover:bg-muted transition-all"
             >
               Read the Docs
@@ -275,7 +275,7 @@ export default function LandingPage() {
             </div>
             <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
               <Link href="/how-it-works" className="hover:text-foreground transition-colors">How It Works</Link>
-              <Link href="/docs" className="hover:text-foreground transition-colors">Docs</Link>
+              <Link href="https://fragmentfi-docs.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">Docs</Link>
               <Link href="/reserves" className="hover:text-foreground transition-colors">Reserves</Link>
               <Link href="/contact" className="hover:text-foreground transition-colors">Contact</Link>
               <a href="https://github.com/debansh001/fragmentfi-stellar" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">GitHub</a>
