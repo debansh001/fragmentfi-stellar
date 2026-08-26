@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import ConnectWalletButton from "./ConnectWalletButton";
 import Image from "next/image";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { name: "How It Works", href: "/how-it-works" },
@@ -56,8 +57,12 @@ export default function Navbar() {
 
         {/* Wallet & Mobile Toggle */}
         <div className="flex items-center justify-end space-x-4">
-          <div className="hidden sm:block">
+          <div className="hidden sm:flex items-center gap-2">
+            <ThemeToggle />
             <ConnectWalletButton />
+          </div>
+          <div className="sm:hidden flex items-center">
+            <ThemeToggle />
           </div>
           <button
             onClick={toggleMenu}
