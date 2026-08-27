@@ -4,11 +4,6 @@
 
 <h1 align="center">FragmentFi</h1>
 
-<p align="center">
-  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/contracts.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/contracts.yml/badge.svg" alt="Soroban Contracts"></a>
-  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/nextjs.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/nextjs.yml/badge.svg" alt="Next.js Build"></a>
-  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/lint.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/lint.yml/badge.svg" alt="Lint & Type Check"></a>
-</p>
 
 <p align="center">
   <strong>Democratizing Institutional Yield Through Tokenized Real-World Assets on Stellar</strong>
@@ -23,6 +18,12 @@
   <img src="https://img.shields.io/badge/Rust-000000?style=for-the-badge&logo=rust&logoColor=white" alt="Rust" />
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/Upstash-00E1D9?style=for-the-badge&logo=upstash&logoColor=white" alt="Upstash" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/contracts.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/contracts.yml/badge.svg" alt="Soroban Contracts"></a>
+  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/nextjs.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/nextjs.yml/badge.svg" alt="Next.js Build"></a>
+  <a href="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/lint.yml"><img src="https://github.com/debansh001/fragmentfi-stellar/actions/workflows/lint.yml/badge.svg" alt="Lint & Type Check"></a>
 </p>
 
 ---
