@@ -109,7 +109,10 @@ export default function DashboardPage() {
           <PortfolioChart />
         </div>
         <div className="flex flex-col gap-6">
-          <YieldCountdown estimatedAmount={estimatedNextAmount} />
+          <YieldCountdown 
+            estimatedAmount={estimatedNextAmount} 
+            hasInvestment={data.portfolio.frag_balance > 0} 
+          />
           
           {/* Recent Transactions */}
           <div className="flex flex-col rounded-xl border border-border bg-background p-6 shadow-sm h-full">

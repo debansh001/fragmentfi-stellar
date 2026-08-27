@@ -10,9 +10,10 @@ import {
 
 interface YieldCountdownProps {
   estimatedAmount: number;
+  hasInvestment?: boolean;
 }
 
-export default function YieldCountdown({ estimatedAmount }: YieldCountdownProps) {
+export default function YieldCountdown({ estimatedAmount, hasInvestment }: YieldCountdownProps) {
   const { address, signTransaction } = useWallet();
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [actionStatus, setActionStatus] = useState<string | null>(null);
@@ -142,10 +143,16 @@ export default function YieldCountdown({ estimatedAmount }: YieldCountdownProps)
           +{estimatedAmount.toFixed(2)} FRAG
         </span>
       </div>
+      
+      {hasInvestment === false && (
+        <div className="w-full text-center text-xs font-medium bg-amber-500/10 text-amber-600 dark:text-amber-400 p-3 rounded-md">
+          You currently have no active investments. Deposit USDC or XLM to start earning yield.
+        </div>
+      )}
 
       <button 
         onClick={handleClaimYield}
-        disabled={isProcessing}
+        disabled={isProcessing || hasInvestment === false}
         className="w-full h-12 inline-flex items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-white shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
       >
         {isProcessing ? (
