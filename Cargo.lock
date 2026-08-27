@@ -591,13 +591,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fragmentfi-contract"
-version = "0.0.0"
-dependencies = [
- "soroban-sdk",
-]
-
-[[package]]
 name = "futures-core"
 version = "0.3.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
