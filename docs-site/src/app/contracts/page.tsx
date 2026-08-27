@@ -1,4 +1,4 @@
-﻿export default function ContractsPage() {
+export default function ContractsPage() {
   const contracts = [
     {
       name: "FRAG Token",
@@ -36,7 +36,7 @@
 
       <div className="space-y-8">
         {contracts.map((c) => (
-          <div key={c.name} className={\ounded-2xl border p-6 \\}>
+          <div key={c.name} className={`rounded-2xl border p-6 ${c.color}`}>
             <div className="flex items-center gap-3 mb-3">
               <h2 className="text-xl font-semibold text-foreground">{c.name}</h2>
             </div>
@@ -49,7 +49,7 @@
               <h4 className="text-sm font-medium text-muted-foreground mb-3 uppercase tracking-wider">Exported Functions</h4>
               <div className="flex flex-wrap gap-2">
                 {c.fns.map((fn) => (
-                  <span key={fn} className={\	ext-xs px-2.5 py-1 rounded-md font-mono \\}>
+                  <span key={fn} className={`text-xs px-2.5 py-1 rounded-md font-mono ${c.badge}`}>
                     {fn}
                   </span>
                 ))}

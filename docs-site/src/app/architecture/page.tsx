@@ -1,4 +1,4 @@
-﻿export default function ArchitecturePage() {
+export default function ArchitecturePage() {
   return (
     <div>
       <div className="mb-10">
@@ -21,7 +21,7 @@
             ].map((flow, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 rounded-lg border border-border">
                 <code className="text-xs font-mono text-primary">{flow.from}</code>
-                <span className="text-muted-foreground text-sm">-></span>
+                <span className="text-muted-foreground text-sm">{"->"}</span>
                 <code className="text-xs font-mono text-emerald-500">{flow.to}</code>
                 <span className="text-xs text-muted-foreground sm:ml-auto">{flow.desc}</span>
               </div>
