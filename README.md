@@ -21,26 +21,27 @@
 
 ---
 
-## ?? Project Links
+## 🔗 Project Links
 
 *   **Vercel Live Deployment :** [https://fragmentfi-stellar.vercel.app/](https://fragmentfi-stellar.vercel.app/)
 *   **Demo Video Walkthrough :** [https://youtu.be/CPQYAlBt0d8](https://youtu.be/CPQYAlBt0d8)
 
-### ?? Documentation Pages
+### 📚 Documentation Pages
 
 | Page | URL |
 |---|---|
-| **Docs Home** | [fragmentfi-docs-site.vercel.app](https://fragmentfi-docs-site.vercel.app/) |
-| **Features** | [fragmentfi-docs-site.vercel.app/features](https://fragmentfi-docs-site.vercel.app/features) |
-| **Usage Guide** | [fragmentfi-docs-site.vercel.app/usage](https://fragmentfi-docs-site.vercel.app/usage) |
-| **Local Setup** | [fragmentfi-docs-site.vercel.app/setup](https://fragmentfi-docs-site.vercel.app/setup) |
-| **Implementation** | [fragmentfi-docs-site.vercel.app/implementation](https://fragmentfi-docs-site.vercel.app/implementation) |
-| **Smart Contracts** | [fragmentfi-docs-site.vercel.app/contracts](https://fragmentfi-docs-site.vercel.app/contracts) |
-| **Architecture** | [fragmentfi-docs-site.vercel.app/architecture](https://fragmentfi-docs-site.vercel.app/architecture) |
-| **How It Works (App)** | [fragmentfi-stellar.vercel.app/how-it-works](https://fragmentfi-stellar.vercel.app/how-it-works) |
-| **Contact (App)** | [fragmentfi-stellar.vercel.app/contact](https://fragmentfi-stellar.vercel.app/contact) |
+| **Docs Home** | [fragmentfi-stellar.vercel.app/docs](https://fragmentfi-stellar.vercel.app/docs) |
+| **Features** | [fragmentfi-stellar.vercel.app/docs/features](https://fragmentfi-stellar.vercel.app/docs/features) |
+| **Usage Guide** | [fragmentfi-stellar.vercel.app/docs/usage](https://fragmentfi-stellar.vercel.app/docs/usage) |
+| **Local Setup** | [fragmentfi-stellar.vercel.app/docs/setup](https://fragmentfi-stellar.vercel.app/docs/setup) |
+| **Implementation** | [fragmentfi-stellar.vercel.app/docs/implementation](https://fragmentfi-stellar.vercel.app/docs/implementation) |
+| **Smart Contracts** | [fragmentfi-stellar.vercel.app/docs/contracts](https://fragmentfi-stellar.vercel.app/docs/contracts) |
+| **Architecture** | [fragmentfi-stellar.vercel.app/docs/architecture](https://fragmentfi-stellar.vercel.app/docs/architecture) |
+| **How It Works** | [fragmentfi-stellar.vercel.app/how-it-works](https://fragmentfi-stellar.vercel.app/how-it-works) |
+| **Contact** | [fragmentfi-stellar.vercel.app/contact](https://fragmentfi-stellar.vercel.app/contact) |
 
 ---
+
 ## Pitch Deck : 
 * **PPT Link :** [ FragmentFi.pdf](https://drive.google.com/file/d/17PqbAhDwsV5Ks_2KE1hgwT7zs6QtPOkz/view?usp=sharing) 
 
@@ -149,12 +150,14 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **API Network Failures** | Dynamic mock fallback states in `/api/reserves` and history routing. | The app remains fully functional and readable even if rate limits occur. |
 | **Stellar Network Timeout** | `setTimeout(30)` configured on transaction builders before submission. | Ensures transactions do not hang indefinitely in queue. |
 
-### Blockchain & Smart Contract Details
-| Smart Contract | Contract ID | Verification Link (Stellar.Expert) |
+### 💎 Level 5 Stellar Integration (Testnet Deployments)
+FragmentFi is built to showcase advanced integration with the Stellar network. We utilize SEP standards, SDEX atomic swaps, and Soroban cross-contract architecture.
+
+| Contract Component | Testnet ID | Explorer Link |
 | :--- | :--- | :--- |
-| **FRAG Token** | `CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV) |
-| **Treasury Pool** | `CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW) |
-| **Yield Distributor** | `CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS) |
+| **FRAG Token (SEP-41)** | `CA4BQ6NHOQ2TNI2PEHPK6KA7JQOF2SCPXO334HUGRSLALDL6YSRQOZKN` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CA4BQ6NHOQ2TNI2PEHPK6KA7JQOF2SCPXO334HUGRSLALDL6YSRQOZKN) |
+| **Treasury Pool** | `CB7WUBMBWKWLIM2UR5S4FW7KYH3ZKSXXUWIJN3UK2PUZU6U56RIFOBLT` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CB7WUBMBWKWLIM2UR5S4FW7KYH3ZKSXXUWIJN3UK2PUZU6U56RIFOBLT) |
+| **Yield Distributor** | `CCYD7AI3X5VLDQJCWC7EXCRNDQDYMEGJ6RPXLEDZDD4DNK576HGYMUAB` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CCYD7AI3X5VLDQJCWC7EXCRNDQDYMEGJ6RPXLEDZDD4DNK576HGYMUAB) |
 
 ---
 
@@ -287,9 +290,9 @@ npx playwright test
     UPSTASH_REDIS_REST_URL="your-upstash-redis-url"
     UPSTASH_REDIS_REST_TOKEN="your-upstash-redis-token"
     JWT_SECRET="your-jwt-signing-secret"
-    NEXT_PUBLIC_FRAG_CONTRACT_ID="CAEDL2F6KBY65SFD2OMGZYIKAKCMVL4H2UDKQBPGRWHPEE3GMOXXAIRV"
-    NEXT_PUBLIC_TREASURY_CONTRACT_ID="CBKHZFGHG3K7XLKHCIEKGKSNZS2M2QY5ABZJFNBFSNJE4HEN6OMAW6EW"
-    NEXT_PUBLIC_YIELD_CONTRACT_ID="CBT7IR4OYDQMAKZTJFJ3FA5JWSEBI5U7QXFM4TYCGDZ35SOOVKIZFPNS"
+    NEXT_PUBLIC_FRAG_CONTRACT_ID="CA4BQ6NHOQ2TNI2PEHPK6KA7JQOF2SCPXO334HUGRSLALDL6YSRQOZKN"
+    NEXT_PUBLIC_TREASURY_CONTRACT_ID="CB7WUBMBWKWLIM2UR5S4FW7KYH3ZKSXXUWIJN3UK2PUZU6U56RIFOBLT"
+    NEXT_PUBLIC_YIELD_CONTRACT_ID="CCYD7AI3X5VLDQJCWC7EXCRNDQDYMEGJ6RPXLEDZDD4DNK576HGYMUAB"
     ```
 4.  **Run Dev Server:**
     ```bash
