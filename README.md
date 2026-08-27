@@ -100,6 +100,14 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Asmaan Verma** | `GDNWLN3JLOCPWWL3WNXKN5PNPHDCJVJR2337VCK3NFK3HCXIDLU2QERC` | I got no issues | Best way to invest and have safe returns | - |
 | **Rashmi Sharma** | `GB3G5ZU7BL3PXWZIOJIETBF6FROFEMZVJJVRUUBTZVNRMLJAQPNPLK5Q` | No scope found but a white backgorund is recommended | UI is very nice | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/38b1aec) |
 | **Jogesh Mandal** | `GD37TTSTX22Y24CAKWO45IKKHEMDYVEK7MEE7QC6C4O6VAIDXCEK4VL4` | no such thing need but a dark and white mode toggle would be good | easy onboarding and payments | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/38b1aec) |
+| **Abhinash Parikh** | `GC22Z2IN3ROLZFW3JEU64C4IZZ74Z5RZWOG4OO64FJPKNMS77GZGVBMA` | Small money dafe place and also good returns | No | - |
+| **Arif Ali** | `GBQWJUMYCSE63MT2XBAYK4BMMAJJFNTOR46QGPST4BLSPWBNGLU6FFHD` | I think the withdraw and deposit tab is having very less information and have lots of space pellase use that empty space | Everything is working fine. Custom Frag token and trade with it is nice. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/eb288d8) |
+| **Riddhiman Sen** | `GC5J6BN4BXXNE6DR6OHJSRH4WH4EZEFIO4AM2KRNFZEA5DCI3QFKODKA` | Overall app experience is nice good app | I didn't encounter any bugs | - |
+| **Abhijit Tiwari** | `GC23LEPSSBJL4VJK6LK5RIRRX2ZKJ3OTVXHJT6HSWPMZ4JJDXE3ZRUPE` | Good Idea | No bug found | - |
+| **Pramit Nandi** | `GDFEYX5Q7UT4ZUREVHPULKYD6C3EKWQDTJY76OXYWTRTUE7PKUSKWJZG` | I think profile tab could be done better seeking more inforamtion from user like email and more info for maketting purpose. | App is nice onboarding with wallet is hreat initiactive | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/b8363e8) |
+| **Ayan Goswami** | `GBJA4Z6IXQLVZWMM3U7C7PFRFHWO7CZ3S62SPC6TX2NLV4XS2MQHBC4F` | I like the Idea and overall good imeplementation | No | - |
+| **Gourab Basak** | `GCVODPBH7PNE6AENNEYO6PFDH3VSF5JKYH6ULN3ZICROIWYAGJWLXSJY` | UI is very nice | NA | - |
+| **Rachin Patil** | `GDQJ7VPDOB247LD6D4QD6UQIYBKNVFU7UKNJGE55K77S23XMG77NEY33` | IF possible amke it more transparent in the RESERVE page about what all investvent are being done like the details users can be given like I want to maintain transparency. | Very nice app. NOt muxh mewss very straight forward | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/429419a) |
 
 ---
 
