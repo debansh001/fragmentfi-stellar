@@ -33,10 +33,10 @@ jobs:
       - name: Install Rust stable toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          targets: wasm32v1-none
+          targets: wasm32-unknown-unknown
 
-      - name: Add wasm32v1 target (explicit)
-        run: rustup target add wasm32v1-none
+      - name: Add wasm32 target (explicit)
+        run: rustup target add wasm32-unknown-unknown
 
       - name: Cache Cargo registry and target directory
         uses: actions/cache@v4
@@ -55,7 +55,7 @@ jobs:
         run: cargo install --locked stellar-cli --features opt
 
       - name: Build contracts (wasm32 release)
-        run: cargo build --release --target wasm32v1-none
+        run: cargo build --release --target wasm32-unknown-unknown
 
       - name: Run contract tests
         run: cargo test
@@ -63,7 +63,7 @@ jobs:
       - name: Show WASM file sizes
         run: |
           echo "=== WASM Output Sizes ==="
-          find target/wasm32v1-none/release -name "*.wasm" -not -name "*-opt.wasm" | while read f; do
+          find target/wasm32-unknown-unknown/release -name "*.wasm" -not -name "*-opt.wasm" | while read f; do
             size=$(wc -c < "$f")
             echo "  $(basename $f): $(echo "scale=2; $size/1024" | bc) KB"
           done
@@ -80,5 +80,5 @@ jobs:
           echo "=== Deploying Contracts ==="
           echo "Deploying frag_token..."
           # dummy line to show it working:
-          # stellar contract deploy --wasm target/wasm32v1-none/release/frag_token.wasm --source-account $STELLAR_DEPLOYER_SECRET --network testnet
+          # stellar contract deploy --wasm target/wasm32-unknown-unknown/release/frag_token.wasm --source-account $STELLAR_DEPLOYER_SECRET --network testnet
           echo "Deploy successful."
