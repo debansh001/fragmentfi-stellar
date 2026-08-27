@@ -1,28 +1,27 @@
-
-export default function ArchitecturePage() {
+﻿export default function ArchitecturePage() {
   return (
     <div>
       <div className="mb-10">
         <p className="text-sm font-medium text-primary mb-2">Architecture</p>
         <h1 className="text-3xl font-bold text-foreground mb-4">System Architecture</h1>
-        <p className="text-muted-foreground">How all components of FragmentFi connect and interact.</p>
+        <p className="text-muted-foreground">How all components of FragmentFi connect and interact with the Stellar Network.</p>
       </div>
 
       <div className="space-y-10">
         <section>
-          <h2 className="text-2xl font-semibold text-foreground mb-6">Deposit Data Flow</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-6">Deposit Data Flow (with SDEX Path Payments)</h2>
           <div className="space-y-3">
             {[
-              { from: "User (Freighter)", to: "Next.js Frontend", desc: "Signs XDR transaction" },
-              { from: "Frontend", to: "Stellar Testnet RPC", desc: "Submits signed transaction" },
-              { from: "RPC", to: "Treasury Contract", desc: "Executes deposit(), mints FRAG" },
-              { from: "Frontend", to: "/api/deposit", desc: "Notifies backend with txHash" },
-              { from: "Backend", to: "Stellar RPC", desc: "Polls for confirmed on-chain balance" },
-              { from: "Backend", to: "Upstash Redis", desc: "Caches updated portfolio state" },
+              { from: "User (Freighter)", to: "Next.js Frontend", desc: "Selects Asset (XLM/USDC) & Path Payment preferences" },
+              { from: "Frontend", to: "Stellar Testnet RPC", desc: "Generates atomic transaction (Swap + Deposit)" },
+              { from: "RPC", to: "SDEX (Stellar DEX)", desc: "Executes PathPaymentStrictReceive to swap XLM -> USDC" },
+              { from: "RPC", to: "Treasury Contract", desc: "Executes deposit_usdc(), mints SEP-41 FRAG" },
+              { from: "Frontend", to: "Stellar Network", desc: "Polls for successful ledger confirmation" },
+              { from: "Soroban", to: "Frontend (Events)", desc: "Emits env.events() stream directly to user dashboard" },
             ].map((flow, i) => (
               <div key={i} className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 rounded-lg border border-border">
                 <code className="text-xs font-mono text-primary">{flow.from}</code>
-                <span className="text-muted-foreground text-sm">→</span>
+                <span className="text-muted-foreground text-sm">-></span>
                 <code className="text-xs font-mono text-emerald-500">{flow.to}</code>
                 <span className="text-xs text-muted-foreground sm:ml-auto">{flow.desc}</span>
               </div>
@@ -31,36 +30,39 @@ export default function ArchitecturePage() {
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold text-foreground mb-4">Security Model</h2>
+          <h2 className="text-2xl font-semibold text-foreground mb-6">Stellar Network Integrations</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[
-              { icon: "🔒", title: "On-chain Balance Authority", desc: "The server never trusts the client for balance amounts. It always fetches from the Stellar RPC and reconciles against the on-chain truth." },
-              { icon: "🍪", title: "HttpOnly JWT Cookies", desc: "Session tokens are stored as HttpOnly cookies, inaccessible to JavaScript, preventing XSS-based token theft." },
-              { icon: "✍️", title: "Signature-based Auth", desc: "No passwords or seed phrases stored. Authentication requires signing a server-issued challenge with your private key." },
-              { icon: "🛡", title: "Soroban Contract Guards", desc: "All sensitive operations on-chain (mint, burn) require admin authorization enforced at the contract level in Rust." },
-            ].map((item) => (
-              <div key={item.title} className="p-5 rounded-xl border border-border">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="font-semibold text-foreground mb-2">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+            <div className="p-5 rounded-xl border border-blue-500/20 bg-blue-500/5">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                SEP-10 Cryptographic Auth
+              </h3>
+              <p className="text-sm text-muted-foreground">We do not accept raw public keys. Users must cryptographically sign a zero-sequence XDR challenge transaction to authenticate via Freighter.</p>
+            </div>
+            
+            <div className="p-5 rounded-xl border border-emerald-500/20 bg-emerald-500/5">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                SEP-41 Token Standard
+              </h3>
+              <p className="text-sm text-muted-foreground">FRAG tokens strictly implement the Soroban Token Interface, supporting native allowances, cross-contract transfers, and full ecosystem interoperability.</p>
+            </div>
 
-        <section>
-          <h2 className="text-2xl font-semibold text-foreground mb-4">CI/CD Pipeline</h2>
-          <div className="space-y-3">
-            {[
-              { file: ".github/workflows/lint.yml", desc: "Runs ESLint and TypeScript check on every push and PR" },
-              { file: ".github/workflows/nextjs.yml", desc: "Builds the Next.js app and deploys to Vercel on push to main" },
-              { file: ".github/workflows/contracts.yml", desc: "Builds Soroban WASM contracts, runs cargo test, deploys to testnet on push to main" },
-            ].map((wf) => (
-              <div key={wf.file} className="flex flex-col sm:flex-row gap-2 p-3 rounded-lg border border-border">
-                <code className="text-xs font-mono text-primary flex-shrink-0">{wf.file}</code>
-                <p className="text-xs text-muted-foreground sm:ml-auto">{wf.desc}</p>
-              </div>
-            ))}
+            <div className="p-5 rounded-xl border border-purple-500/20 bg-purple-500/5">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-purple-500"></div>
+                Soroban Event Streaming
+              </h3>
+              <p className="text-sm text-muted-foreground">All contract state changes emit native logs via <code>env.events()</code>, which are polled dynamically by our React frontend for real-time auditability.</p>
+            </div>
+
+            <div className="p-5 rounded-xl border border-orange-500/20 bg-orange-500/5">
+              <h3 className="font-semibold mb-2 flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                TTL Expiry Management
+              </h3>
+              <p className="text-sm text-muted-foreground">Contracts autonomously bump ledger TTL bounds via <code>extend_ttl()</code> to guarantee user balances and allowances are never archived.</p>
+            </div>
           </div>
         </section>
       </div>
