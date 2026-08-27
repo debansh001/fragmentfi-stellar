@@ -293,3 +293,5 @@ mod test {
         assert_eq!(client.total_supply(), 50);
     }
 }
+
+// Trigger CI
