@@ -108,6 +108,19 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Ayan Goswami** | `GBJA4Z6IXQLVZWMM3U7C7PFRFHWO7CZ3S62SPC6TX2NLV4XS2MQHBC4F` | I like the Idea and overall good imeplementation | No | - |
 | **Gourab Basak** | `GCVODPBH7PNE6AENNEYO6PFDH3VSF5JKYH6ULN3ZICROIWYAGJWLXSJY` | UI is very nice | NA | - |
 | **Rachin Patil** | `GDQJ7VPDOB247LD6D4QD6UQIYBKNVFU7UKNJGE55K77S23XMG77NEY33` | IF possible amke it more transparent in the RESERVE page about what all investvent are being done like the details users can be given like I want to maintain transparency. | Very nice app. NOt muxh mewss very straight forward | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/429419a) |
+| **Sanket Dey** | `GCVRAIG5F2ECKA2I6AGKYXFLFTUTWBROCXLQET7WX3SZEKBFX6M2SJAH` | NA | App is good but I tested it and found vulgaribility in authentication paelase check that once. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/0e3fce1) |
+| **Rakesh Dutta** | `GCKF7AIJJ5TCJ2MW5TMDSALFHSGKIJTZ5ML3PJ3P6N5726E2GQXVXBNI` | FragemntFI idea is good want to see more growth of it. | NA | - |
+| **Roni Mondal** | `GAUVTXZPGQSA3AILP4WLQTDY2WTG5SE7PY4VN3CFNT6HMT2Z7VMYAASS` | Product Idea is very good | I think more work to be needed its very simple looking deposit and withdrawl just. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/3fb6b00) |
+| **Debanshu Nath** | `GA7A4OHK55D3YRLLQJLIM7Y6R3TXGT45DPSHVSWRXLSUIDJSBTBTPWAW` | Smooth Trasnection zero lag | No issues | - |
+| **Jayeta Bose** | `GAVNKQJQH67HIDKS3VQVWQJKWO5CYO3INGXS7Y3NJBBM42L4QFU7NZ4X` | Product is good | No everything ok from my side | - |
+| **Saphoia Ansari** | `GB6TDEABOPVRD5P4BESJ3SD4J2XMJ3NQF6RIND77ZUSAJLRJSULLSFQX` | Overall app is good but its very small I think more features are needed. | No error everything is fine | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/3fb6b00) |
+| **Samuel Pandey** | `GAAQ5DEN4X6RGDZRW7MJDJOZHCZOK7OJJLH7GKDZDQP6FQZJ7JJTF674` | UI is very light and good | This product is good currently but sufficent | - |
+| **Mainak Dutta** | `GCZN6JR6IVSFUSMZR2QQZACDBTM2GCRMEEZGGU3F2GNNWVTPOCDVE7TU` | Idea is good | Mistakenly I did deposit USDC I thought it will fail but it worked unfortunately but the txn hash is not opening when clicking on verify I think its mock data. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/3fb6b00) |
+| **Vinayak Losalka** | `GCYTO76ZKKWHLHX46PUUGFOW6O5G2URMDX6WSOKB5UVJIWJIOHODCOSK` | Overall UI is very food and onboarding is also very nice. | No | - |
+| **Jaijeet Manna** | `GBIAUXOC7DQVN4DK2PU3KUDDRP4WP3IKXYPETELZLQGKJBTNY4QYKQDJ` | I like how ease the investing is through this app | Nothing like that got | - |
+| **Fardin Rahman** | `GALN6TPIOE5NAFYA3MEE4L2KPXM7CKHJRSEWOWMBGQ6KYCU7U5UMCRKS` | Overall product is good | Nothing like that got its good | - |
+| **Yugli** | `GAMQZW6Q5OYO7KHIMTS5DQQ7CFN5PIAL4CJWNLJ5M4P4X72BQSDEQDPG` | Trasnection spped is fast I liked it | I didn't find error | - |
+| **Adrija Majhi** | `GDWXLJIZDOY5THKEGWKZXD245SU4BVJSVJ63LI4PAUY4KMR4JPRCZFBP` | Very good idea | Uer can claim yield without investment is that a valid move if so add a banner about what is happing its confusing for me. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/65cbd27) |
 
 ---
 
