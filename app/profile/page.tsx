@@ -8,6 +8,20 @@ export default function ProfilePage() {
   const { address, disconnect } = useWallet();
   const [copied, setCopied] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleSaveEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    // Simulate API call
+    setTimeout(() => {
+      setSaving(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }, 800);
+  };
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -71,6 +85,31 @@ export default function ProfilePage() {
             Disconnect Wallet
           </button>
         </div>
+      </div>
+
+      <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+        <h2 className="text-lg font-semibold mb-4">Contact Preferences</h2>
+        <form onSubmit={handleSaveEmail} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="text-sm font-medium text-muted-foreground mb-1.5 block">Email Address (Optional)</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email for marketing and updates"
+              className="w-full bg-background border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={saving}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-md text-sm font-medium hover:bg-primary/90 transition-colors disabled:opacity-50"
+          >
+            {saving ? "Saving..." : "Save Preferences"}
+          </button>
+          {saved && <p className="text-xs text-green-500">Preferences saved successfully!</p>}
+        </form>
       </div>
     </div>
   );
