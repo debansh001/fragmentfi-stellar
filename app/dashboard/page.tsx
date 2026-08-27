@@ -6,6 +6,7 @@ import StatCard from '@/components/StatCard';
 import PortfolioChart from '@/components/PortfolioChart';
 import YieldCountdown from '@/components/YieldCountdown';
 import WalkthroughTutorial from '@/components/WalkthroughTutorial';
+import EventsStream from '@/components/EventsStream';
 
 interface DashboardData {
   portfolio: {
@@ -160,6 +161,12 @@ export default function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* On-Chain Events Feed */}
+      <div className="mt-2">
+        <EventsStream />
+      </div>
+      
       </div>
     </>
   );

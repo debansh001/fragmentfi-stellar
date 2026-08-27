@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useWallet } from '@/hooks/useWallet';
-import { buildDepositTransaction } from '@/lib/stellar';
+import { buildDepositTransaction, buildPathPaymentTransaction } from '@/lib/stellar';
 
 interface DepositFormProps {
   onSuccess: (amountFrag: number, newBalance: number, txHash: string) => void;
@@ -12,6 +12,7 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
   const { address, signTransaction } = useWallet();
   const [asset, setAsset] = useState<'XLM' | 'USDC'>('USDC');
   const [amount, setAmount] = useState('');
+  const [usePathPayment, setUsePathPayment] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,7 +44,14 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
 
     try {
       // 1. Build Transaction
-      const xdr = await buildDepositTransaction(address, numAmount.toString(), asset);
+      let xdr = '';
+      if (asset === 'USDC' && usePathPayment) {
+        // SDEX Swap: Max XLM to spend is roughly amount / 0.15 + 10% buffer
+        const maxXlm = (numAmount / 0.15) * 1.1;
+        xdr = await buildPathPaymentTransaction(address, numAmount.toString(), maxXlm.toFixed(7));
+      } else {
+        xdr = await buildDepositTransaction(address, numAmount.toString(), asset);
+      }
       
       // 2. Sign via Freighter & Submit
       let signedXdr = xdr;
@@ -126,6 +134,20 @@ export default function DepositForm({ onSuccess }: DepositFormProps) {
               XLM
             </button>
           </div>
+          {asset === 'USDC' && (
+            <div className="flex items-center gap-2 mt-2 ml-1">
+              <input
+                type="checkbox"
+                id="usePathPayment"
+                checked={usePathPayment}
+                onChange={(e) => setUsePathPayment(e.target.checked)}
+                className="rounded border-input text-primary focus:ring-primary"
+              />
+              <label htmlFor="usePathPayment" className="text-xs text-muted-foreground cursor-pointer">
+                Swap from XLM automatically (Path Payment)
+              </label>
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-2 mb-6">
