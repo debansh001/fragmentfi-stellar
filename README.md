@@ -176,6 +176,9 @@ FragmentFi is built to showcase advanced integration with the Stellar network. W
 | **Treasury Pool** | `CB7WUBMBWKWLIM2UR5S4FW7KYH3ZKSXXUWIJN3UK2PUZU6U56RIFOBLT` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CB7WUBMBWKWLIM2UR5S4FW7KYH3ZKSXXUWIJN3UK2PUZU6U56RIFOBLT) |
 | **Yield Distributor** | `CCYD7AI3X5VLDQJCWC7EXCRNDQDYMEGJ6RPXLEDZDD4DNK576HGYMUAB` | [View on Explorer](https://stellar.expert/explorer/testnet/contract/CCYD7AI3X5VLDQJCWC7EXCRNDQDYMEGJ6RPXLEDZDD4DNK576HGYMUAB) |
 
+### On-Chain Transactions Proof
+![Stellar Transactions Proof](assets/trasnections-proof.png)
+
 ---
 
 ## 📁 File Architecture
@@ -281,6 +284,9 @@ npx playwright test
 
 #### E2E Test Execution Proof
 ![Playwright E2E Test Results](assets/test-screenshot.png)
+
+### Production Web Analytics
+![Vercel Analytics Dashboard](assets/vercel-analytics.png)
 
 ---
 
