@@ -55,7 +55,13 @@ jobs:
       - name: Install stellar-cli
         run: cargo install --locked stellar-cli
 
-      - name: Build contracts (wasm32 release)
+      - name: Build frag_token dependency first
+        run: |
+          cargo build -p frag-token --release --target wasm32-unknown-unknown
+          mkdir -p target/wasm/frag_token
+          cp target/wasm32-unknown-unknown/release/frag_token.wasm target/wasm/frag_token/frag_token.wasm
+
+      - name: Build all contracts (wasm32 release)
         run: cargo build --release --target wasm32-unknown-unknown
 
       - name: Run contract tests
