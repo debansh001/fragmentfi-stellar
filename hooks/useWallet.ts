@@ -11,7 +11,6 @@ export function useWallet() {
   const [isConnecting, setIsConnecting] = useState(true);
   const [walletType, setWalletType] = useState<WalletType>(null);
 
-  // Restore session from httpOnly cookie via /api/me
   useEffect(() => {
     const savedType = localStorage.getItem('fragmentfi_wallet_type') as WalletType;
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -52,11 +51,28 @@ export function useWallet() {
 
       if (!pubKey) return;
 
-      // Verify with backend
+      // SEP-10 Auth Flow
+      // 1. Get Challenge
+      const challengeRes = await fetch('/api/auth/challenge?address=' + pubKey);
+      if (!challengeRes.ok) throw new Error('Failed to fetch auth challenge');
+      const { xdr: challengeXdr } = await challengeRes.json();
+
+      // 2. Sign Challenge
+      let signedXdr = '';
+      if (selectedWallet === 'albedo') {
+        const res = await albedo.tx({ xdr: challengeXdr, network: 'testnet' });
+        signedXdr = res.signed_envelope_xdr;
+      } else {
+        const res = await freighterSignTransaction(challengeXdr, { networkPassphrase: 'Test SDF Network ; September 2015' }) as any;
+        if (res.error) throw new Error(res.error);
+        signedXdr = res.signedTxXdr;
+      }
+
+      // 3. Verify Signature
       const res = await fetch('/api/auth/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ address: pubKey }),
+        body: JSON.stringify({ address: pubKey, signedXdr }),
       });
 
       if (res.ok) {

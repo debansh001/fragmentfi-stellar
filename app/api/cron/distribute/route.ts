@@ -24,7 +24,7 @@ export async function GET(req: Request) {
     }
 
     // 3. Execute the distribution on the smart contract directly from the backend
-    const txHash = await executeDistributeCron(adminSecret, poolBalance.toString());
+    const txHash = await executeDistributeCron(adminSecret);
 
     return NextResponse.json({ 
       success: true, 
