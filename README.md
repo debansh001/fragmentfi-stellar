@@ -21,27 +21,26 @@
 
 ---
 
-## 🔗 Project Links
+## ?? Project Links
 
 *   **Vercel Live Deployment :** [https://fragmentfi-stellar.vercel.app/](https://fragmentfi-stellar.vercel.app/)
 *   **Demo Video Walkthrough :** [https://youtu.be/CPQYAlBt0d8](https://youtu.be/CPQYAlBt0d8)
 
-### 📚 Documentation Pages
+### ?? Documentation Pages
 
 | Page | URL |
 |---|---|
-| **Docs Home** | [fragmentfi-stellar.vercel.app/docs](https://fragmentfi-stellar.vercel.app/docs) |
-| **Features** | [fragmentfi-stellar.vercel.app/docs/features](https://fragmentfi-stellar.vercel.app/docs/features) |
-| **Usage Guide** | [fragmentfi-stellar.vercel.app/docs/usage](https://fragmentfi-stellar.vercel.app/docs/usage) |
-| **Local Setup** | [fragmentfi-stellar.vercel.app/docs/setup](https://fragmentfi-stellar.vercel.app/docs/setup) |
-| **Implementation** | [fragmentfi-stellar.vercel.app/docs/implementation](https://fragmentfi-stellar.vercel.app/docs/implementation) |
-| **Smart Contracts** | [fragmentfi-stellar.vercel.app/docs/contracts](https://fragmentfi-stellar.vercel.app/docs/contracts) |
-| **Architecture** | [fragmentfi-stellar.vercel.app/docs/architecture](https://fragmentfi-stellar.vercel.app/docs/architecture) |
-| **How It Works** | [fragmentfi-stellar.vercel.app/how-it-works](https://fragmentfi-stellar.vercel.app/how-it-works) |
-| **Contact** | [fragmentfi-stellar.vercel.app/contact](https://fragmentfi-stellar.vercel.app/contact) |
+| **Docs Home** | [fragmentfi-docs-site.vercel.app](https://fragmentfi-docs-site.vercel.app/) |
+| **Features** | [fragmentfi-docs-site.vercel.app/features](https://fragmentfi-docs-site.vercel.app/features) |
+| **Usage Guide** | [fragmentfi-docs-site.vercel.app/usage](https://fragmentfi-docs-site.vercel.app/usage) |
+| **Local Setup** | [fragmentfi-docs-site.vercel.app/setup](https://fragmentfi-docs-site.vercel.app/setup) |
+| **Implementation** | [fragmentfi-docs-site.vercel.app/implementation](https://fragmentfi-docs-site.vercel.app/implementation) |
+| **Smart Contracts** | [fragmentfi-docs-site.vercel.app/contracts](https://fragmentfi-docs-site.vercel.app/contracts) |
+| **Architecture** | [fragmentfi-docs-site.vercel.app/architecture](https://fragmentfi-docs-site.vercel.app/architecture) |
+| **How It Works (App)** | [fragmentfi-stellar.vercel.app/how-it-works](https://fragmentfi-stellar.vercel.app/how-it-works) |
+| **Contact (App)** | [fragmentfi-stellar.vercel.app/contact](https://fragmentfi-stellar.vercel.app/contact) |
 
 ---
-
 ## Pitch Deck : 
 * **PPT Link :** [ FragmentFi.pdf](https://drive.google.com/file/d/17PqbAhDwsV5Ks_2KE1hgwT7zs6QtPOkz/view?usp=sharing) 
 
