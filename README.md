@@ -121,6 +121,10 @@ Below is a detailed log of the latest user reviews, including the commit links w
 | **Fardin Rahman** | `GALN6TPIOE5NAFYA3MEE4L2KPXM7CKHJRSEWOWMBGQ6KYCU7U5UMCRKS` | Overall product is good | Nothing like that got its good | - |
 | **Yugli** | `GAMQZW6Q5OYO7KHIMTS5DQQ7CFN5PIAL4CJWNLJ5M4P4X72BQSDEQDPG` | Trasnection spped is fast I liked it | I didn't find error | - |
 | **Adrija Majhi** | `GDWXLJIZDOY5THKEGWKZXD245SU4BVJSVJ63LI4PAUY4KMR4JPRCZFBP` | Very good idea | Uer can claim yield without investment is that a valid move if so add a banner about what is happing its confusing for me. | [View Commit (Verify)](https://github.com/debansh001/fragmentfi-stellar/commit/65cbd27) |
+| **Subhankar Maity** | `GAJ7DRJCSIJDLH4JJYXQ4MWG5GHSK56AYCQUGKKW4OFYXGDAH3G2FXRN` | Saw something different. Good Work | Nothing to say just keep it up! | - |
+| **Mandira Paul** | `GBY5SUTENI56R6I2O2C6Y3IT6YD2STF76DDUXPILZU4NIEEP7RQCAWSI` | Overall the transection are smooth no issues with that | NA | - |
+| **Sammanay Das** | `GAQKUIGCICSMZ6UCUHAH7PVI7VIFKK464M5RIARN77VXO4KAV2RTNYSU` | Nice app and UI transition is smooth | No its fine | - |
+| **Gouri Debnath** | `GDSHPINMELPVJEFCBVO5ZQYYB2CC7YQPGM2L3UPOIJLROO5MAMIIYO7X` | No issues and its easy for me to handle not being from this web3 background. | No such scope found | - |
 
 ---
 
