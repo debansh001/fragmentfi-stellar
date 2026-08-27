@@ -99,6 +99,48 @@ export default function ReservesPage() {
         </div>
       </div>
 
+      <div className="mt-4 bg-card border border-border rounded-xl p-6 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4">Investment Allocation Details</h2>
+        <p className="text-sm text-muted-foreground mb-6">
+          To generate safe and stable yields while maintaining deep liquidity, the FragmentFi treasury carefully allocates backing assets across the following risk-free and high-grade strategies.
+        </p>
+
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-sm">
+              <span className="font-medium">US Treasury Bills (Tokenized)</span>
+              <span className="text-muted-foreground">70% Allocation</span>
+            </div>
+            <div className="w-full bg-muted rounded-full h-2.5">
+              <div className="bg-emerald-500 h-2.5 rounded-full" style={{ width: "70%" }}></div>
+            </div>
+            <p className="text-xs text-muted-foreground">Short-term US government debt providing the baseline risk-free yield.</p>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-sm">
+              <span className="font-medium">AAA Corporate Bonds</span>
+              <span className="text-muted-foreground">20% Allocation</span>
+            </div>
+            <div className="w-full bg-muted rounded-full h-2.5">
+              <div className="bg-blue-500 h-2.5 rounded-full" style={{ width: "20%" }}></div>
+            </div>
+            <p className="text-xs text-muted-foreground">High-grade corporate debt for enhanced yield generation.</p>
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-sm">
+              <span className="font-medium">Cash Equivalents (Stellar USDC)</span>
+              <span className="text-muted-foreground">10% Allocation</span>
+            </div>
+            <div className="w-full bg-muted rounded-full h-2.5">
+              <div className="bg-primary h-2.5 rounded-full" style={{ width: "10%" }}></div>
+            </div>
+            <p className="text-xs text-muted-foreground">Liquid USDC held directly in the smart contract to fulfill immediate withdrawals 24/7.</p>
+          </div>
+        </div>
+      </div>
+
       <div className="mt-4">
         <AuditLog logs={data.auditLogs} />
       </div>
