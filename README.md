@@ -32,6 +32,7 @@
 
 *   **Vercel Live Deployment :** [https://fragmentfi-stellar.vercel.app/](https://fragmentfi-stellar.vercel.app/)
 *   **Demo Video Walkthrough :** [https://youtu.be/CPQYAlBt0d8](https://youtu.be/CPQYAlBt0d8)
+*   **Product Pitch :** [FragmentFi Pitch](https://drive.google.com/file/d/17PqbAhDwsV5Ks_2KE1hgwT7zs6QtPOkz/view?usp=sharing) *(Google Slides Link)*
 
 ### 📚 Documentation Pages
 
@@ -48,9 +49,6 @@
 | **Contact** | [fragmentfi-stellar.vercel.app/contact](https://fragmentfi-stellar.vercel.app/contact) |
 
 ---
-
-## Pitch Deck : 
-* **PPT Link :** [ FragmentFi.pdf](https://drive.google.com/file/d/17PqbAhDwsV5Ks_2KE1hgwT7zs6QtPOkz/view?usp=sharing) 
 
 ## 💡 About The Product
 
